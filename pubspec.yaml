@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # To connect the API
+  http: ^0.12.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -31,6 +33,10 @@ dependencies:
 
   # Authentication buttons for Flutter
   flutter_auth_buttons: ^0.8.0
+  # Font used in slidebar screen
+  font_awesome_flutter: ^8.2.0
+
+  # Font for 
 
 dev_dependencies:
   flutter_test:
