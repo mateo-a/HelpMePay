@@ -8,48 +8,33 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
-  String _name;
-  String _email;
+  String _amount;
   String _phoneNumber;
   String _dropdownValue;
   String _installments;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Widget _buildName() {
+  Widget _buildQty() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Name'),
+      decoration: InputDecoration(labelText: 'Cuánto necesitas'),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Name is required';
+          return 'Ingresa la cantidad para el prestamo';
         }
       },
       onSaved: (String value) {
-        _name = value;
-      },
-    );
-  }
-
-  Widget _buildEmail() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Email'),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Email is required';
-        }
-      },
-      onSaved: (String value) {
-        _email = value;
+        _amount = value;
       },
     );
   }
 
   Widget _buildphoneNumber() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Phone number'),
+      decoration: InputDecoration(labelText: 'Déjanos tu teléfono'),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Phone Number is required';
+          return 'Se requiere un numero de teléfono';
         }
       },
       onSaved: (String value) {
@@ -61,6 +46,7 @@ class FormScreenState extends State<FormScreen> {
   Widget _buildDream() {
     return DropdownButton<String>(
       isExpanded: true,
+      hint: Text('Para qué es el préstamo'),
       value: _dropdownValue,
       icon: Icon(Icons.arrow_downward),
       iconSize: 24,
@@ -88,6 +74,7 @@ class FormScreenState extends State<FormScreen> {
   Widget _buildInstallments() {
     return DropdownButton<String>(
       isExpanded: true,
+      hint: Text('A cuántas cuotas'),
       value: _installments,
       icon: Icon(Icons.arrow_downward),
       iconSize: 24,
@@ -112,6 +99,63 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Detalle del Préstamo'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Cantidad: \t ${_amount}'),
+                Text('Cuotas: \t ${_installments}'),
+                Text('Para: \t ${_dropdownValue}'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Aceptar'),
+              onPressed: () {
+                _showConfirmation();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showConfirmation() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Solicitud en proceso'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                    'Estamos procesando tu solicitud de Prestamo. Te notificaremos una vez haya sido aprobada'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Aceptar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,13 +166,8 @@ class FormScreenState extends State<FormScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _buildName(),
-                  _buildEmail(),
+                  _buildQty(),
                   _buildphoneNumber(),
-                  Text(
-                    'What for',
-                    style: TextStyle(),
-                  ),
                   _buildDream(),
                   _buildInstallments(),
                   SizedBox(height: 100),
@@ -137,7 +176,9 @@ class FormScreenState extends State<FormScreen> {
                       'Submit',
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      _showMyDialog(),
+                    },
                   ),
                 ],
               ),
