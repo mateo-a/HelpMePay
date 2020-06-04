@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   # To connect the API
   http: ^0.12.1
+  # Used to show percent circle in progress_b.dart
+  percent_indicator: ^2.1.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
