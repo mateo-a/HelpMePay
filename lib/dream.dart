@@ -4,9 +4,12 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'add_funds.dart';
+import 'models/user.dart';
 
 void main() {
   runApp(new MyApp());
+//  runApp(MaterialApp(home: Scaffold(body: SamplePage())));
 }
 
 class MyApp extends StatelessWidget {
@@ -34,20 +37,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //Conectarse a la API y cargar datos
   Future<List<User>> _getUsers() async {
-    var data = await http
+    var response = await http
         .get("http://www.json-generator.com/api/json/get/cfSVlomvTm?indent=2");
 
-    var jsonData = json.decode(data.body);
+    var jsonData = json.decode(response.body);
 
     List<User> users = [];
 
     for (var u in jsonData) {
-      User user =
+      final user =
           User(u["index"], u["about"], u["name"], u["email"], u["picture"]);
-
+      //User.fromJson(jsonData);
       users.add(user);
     }
-
     print(users.length);
 
     return users;
@@ -315,14 +317,4 @@ class _MoneySliderState extends State<MoneySlider> {
       ),
     );
   }
-}
-
-class User {
-  final int index;
-  final String about;
-  final String name;
-  final String email;
-  final String picture;
-
-  User(this.index, this.about, this.name, this.email, this.picture);
 }
