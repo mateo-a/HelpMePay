@@ -15,20 +15,17 @@ class Login extends StatelessWidget {
                 'tus sueños y/o ayudar a financiar los de '
                 'otros'),
           ),
+          Container(child: GoogleSignInButton(
+            onPressed: () {/* ... */},
+          )),
           Container(
-              child: GoogleSignInButton(
-                onPressed: () {/* ... */},
-              )
-          ),
-          Container (
             child: FacebookSignInButton(onPressed: () {
               // call authentication logic
             }),
           ),
-          Container (
+          Container(
             child: Text('By proceeding you agree with the terms'
-                'of service and the privacy policy'
-            ),
+                'of service and the privacy policy'),
           ),
         ],
       ),
