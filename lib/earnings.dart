@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/rendering.dart';
+import 'models/charts.dart';
 
 class EarningScreen extends StatelessWidget {
-  final List<UserEarnings> data = [
+    final List<UserEarnings> data = [
     UserEarnings(
       day: "02-02-21",
       money: 50000,
@@ -33,83 +33,81 @@ class EarningScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Tus ganancias"),
-        ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-
-              Center(
-                child: UserChart(data: data),
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Nuevo Pago'),
-                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Nuevo Pago'),
-                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Nuevo Pago'),
-                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Nuevo Pago'),
-                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
-              ),
-            ]
-          )
-        ),
-    );
-  }
-}
-
-class UserEarnings {
-  final String day;
-  final int money;
-  final charts.Color barColor;
-
-  UserEarnings(
-      {@required this.day, @required this.money, @required this.barColor});
-}
-
-class UserChart extends StatelessWidget {
-  final List<UserEarnings> data;
-
-  UserChart({@required this.data});
-
-  @override
-  Widget build(BuildContext context) {
-    List<charts.Series<UserEarnings, String>> series = [
-      charts.Series(
-        id: "Ganancias",
-        data: data,
-        domainFn: (UserEarnings series, _) => series.day,
-        measureFn: (UserEarnings series, _) => series.money,
-        colorFn: (UserEarnings series, _) => series.barColor,
-      )
-    ];
-    return Container(
-      height: 400,
-      padding: EdgeInsets.all(20),
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            Text(
-              "Tus ganancias",
-              style: Theme.of(context).textTheme.bodyText2,
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(text: "Ganancias"),
+                Tab(text: "En prestamo"),              ],
             ),
-            Expanded(
-              child: charts.BarChart(series, animate: true),
-            )
-          ],
+            title: Text('Tus ganancias'),
+          ),
+          body: TabBarView(
+            children: [
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Center(
+                      child: UserChart(data: data),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Nuevo Pago'),
+                      subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Nuevo Pago'),
+                      subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Nuevo Pago'),
+                      subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Nuevo Pago'),
+                      subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                    ),
+                  ],
+                ),
+                
+              ),
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      color: Colors.blue,
+                      height: 400,
+                      margin: EdgeInsets.only(left: 2, right: 2),
+                      child: Center (
+                        child: Text(
+                        "500000",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 50, color: Colors.white), 
+                      ),
+                      )
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Nuevo Pago'),
+                      subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.person),
+                      title: Text('Nuevo Pago'),
+                      subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                    ),
+                  ],
+                )
+              ),              
+              
+            ],
+          ),
         ),
       ),
     );
