@@ -37,9 +37,37 @@ class EarningScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text("Tus ganancias"),
         ),
-        body: Center(
-          child: UserChart(data: data),
-        ));
+        body: Container(
+          child: Column(
+            children: <Widget>[
+
+              Center(
+                child: UserChart(data: data),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Nuevo Pago'),
+                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Nuevo Pago'),
+                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Nuevo Pago'),
+                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('Nuevo Pago'),
+                subtitle: Text('Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+              ),
+            ]
+          )
+        ),
+    );
   }
 }
 
