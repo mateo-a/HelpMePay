@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FormScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
+  FormScreenState createState() {
     return FormScreenState();
   }
 }
@@ -13,17 +13,18 @@ class FormScreenState extends State<FormScreen> {
   String _dropdownValue;
   String _installments;
   String _story;
-  bool accepted; 
+  bool accepted = false; 
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   Widget _buildQty() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Cuánto necesitas'),
-      validator: (String value) {
+      validator: (String value){
         if (value.isEmpty) {
           return 'Ingresa la cantidad para el prestamo';
         }
+        return null;
       },
       onSaved: (String value) {
         _amount = value;
@@ -34,10 +35,11 @@ class FormScreenState extends State<FormScreen> {
   Widget _buildphoneNumber() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Déjanos tu teléfono'),
-      validator: (String value) {
+      validator: (String value){
         if (value.isEmpty) {
           return 'Se requiere un numero de teléfono';
         }
+        return null;
       },
       onSaved: (String value) {
         _phoneNumber = value;
@@ -50,14 +52,9 @@ class FormScreenState extends State<FormScreen> {
       isExpanded: true,
       hint: Text('Para qué es el préstamo'),
       value: _dropdownValue,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.blue),
-      underline: Container(
-        height: 2,
-        color: Colors.blueAccent,
-      ),
+      icon: Icon(Icons.arrow_drop_down),
+      iconSize: 30,
+      elevation: 20,
       onChanged: (String newValue) {
         setState(() {
           _dropdownValue = newValue;
@@ -78,14 +75,9 @@ class FormScreenState extends State<FormScreen> {
       isExpanded: true,
       hint: Text('A cuántas cuotas'),
       value: _installments,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.blue),
-      underline: Container(
-        height: 2,
-        color: Colors.blueAccent,
-      ),
+      icon: Icon(Icons.arrow_drop_down),
+      iconSize: 30,
+      elevation: 20,
       onChanged: (String newValue) {
         setState(() {
           _installments = newValue;
@@ -110,19 +102,18 @@ class FormScreenState extends State<FormScreen> {
         if (value.isEmpty) {
           return 'Deja tu historia para convencer a los inversores';
         }
+        return null;
       },
       onSaved: (String value) {
         _story = value;
       },
-
-
     );
   }
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: true, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Detalle del Préstamo'),
@@ -180,7 +171,9 @@ class FormScreenState extends State<FormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("Llena tus datos")),
-        body: Container(
+        body: Form(
+          key: _formKey,
+          child:Container(
             margin: EdgeInsets.all(24),
             child: Form(
               child: Column(
@@ -188,12 +181,28 @@ class FormScreenState extends State<FormScreen> {
                 children: <Widget>[
                   _buildQty(),
                   _buildphoneNumber(),
+                  SizedBox(height: 16),
                   _buildDream(),
+                  SizedBox(height: 16),
                   _buildInstallments(),
                   _buildStory(),
+                  SizedBox(height:20),
                   Row(
                     children: [
-                      Text("Confirmo que he leido y acepto los terminos y condiciones del servicio"),
+                      Checkbox(
+                        value: accepted,
+                        onChanged: (bool value) {
+                          setState(() {
+                            accepted = value; 
+                          });
+                        },
+                      ), 
+                      Container(
+                        
+                        child: Expanded(
+                          child: Text("Confirmo que he leido y acepto los terminos y condiciones del servicio"), 
+                        ), 
+                      )
                     ]
                   ),
                   SizedBox(height: 100),
@@ -203,11 +212,16 @@ class FormScreenState extends State<FormScreen> {
                       style: TextStyle(color: Colors.blue, fontSize: 16),
                     ),
                     onPressed: () => {
-                      _showMyDialog(),
+                      if(_formKey.currentState.validate()) {
+                        _showMyDialog(),
+                      }
                     },
                   ),
                 ],
               ),
-            )));
+            )
+          )
+        )
+      );
   }
 }
