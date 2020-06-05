@@ -5,8 +5,10 @@ class User {
   final String name;
   final String email;
   final String picture;
+  final String balance;
 
-  User(this.index, this.about, this.name, this.email, this.picture);
+  User(this.index, this.about, this.name, this.email, this.picture,
+      this.balance);
 
 //  factory User.fromJson(Map<String, dynamic> json) => User(
 //        index: json['index'],
@@ -23,6 +25,7 @@ class User {
     data['name'] = this.name;
     data['email'] = this.email;
     data['picture'] = this.picture;
+    data['favoriteFruit'] = this.balance;
     return data;
   }
 }
