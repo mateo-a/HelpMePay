@@ -83,7 +83,7 @@ class EarningScreen extends StatelessWidget {
                     Container(
                       color: Colors.blue,
                       height: 400,
-                      margin: EdgeInsets.only(left: 2, right: 2),
+                      margin: EdgeInsets.only(left: 2, right: 2 ),
                       child: Center (
                         child: Text(
                         "500000",
