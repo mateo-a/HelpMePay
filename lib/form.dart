@@ -12,6 +12,8 @@ class FormScreenState extends State<FormScreen> {
   String _phoneNumber;
   String _dropdownValue;
   String _installments;
+  String _story;
+  bool accepted; 
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -99,6 +101,24 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  Widget _buildStory() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Cuéntanos tu historia'),
+      keyboardType: TextInputType.multiline,      
+      maxLines: null,
+      validator: (String value){
+        if (value.isEmpty) {
+          return 'Deja tu historia para convencer a los inversores';
+        }
+      },
+      onSaved: (String value) {
+        _story = value;
+      },
+
+
+    );
+  }
+
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -109,9 +129,9 @@ class FormScreenState extends State<FormScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Cantidad: \t ${_amount}'),
-                Text('Cuotas: \t ${_installments}'),
-                Text('Para: \t ${_dropdownValue}'),
+                Text('Cantidad: \t $_amount'),
+                Text('Cuotas: \t $_installments'),
+                Text('Para: \t $_dropdownValue'),
               ],
             ),
           ),
@@ -170,6 +190,12 @@ class FormScreenState extends State<FormScreen> {
                   _buildphoneNumber(),
                   _buildDream(),
                   _buildInstallments(),
+                  _buildStory(),
+                  Row(
+                    children: [
+                      Text("Confirmo que he leido y acepto los terminos y condiciones del servicio"),
+                    ]
+                  ),
                   SizedBox(height: 100),
                   RaisedButton(
                     child: Text(

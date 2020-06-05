@@ -6,10 +6,11 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
+            padding: EdgeInsets.all(14),
             child: Text('Help me pay es una plataforma de '
                 'Crowdlending que te ayuda alcanzar '
                 'tus sueños y/o ayudar a financiar los de '
@@ -24,6 +25,7 @@ class Login extends StatelessWidget {
             }),
           ),
           Container(
+            padding: EdgeInsets.all(14),
             child: Text('By proceeding you agree with the terms'
                 'of service and the privacy policy'),
           ),
