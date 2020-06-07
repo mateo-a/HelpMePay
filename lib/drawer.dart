@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/main.dart';
+import 'main.dart';
+import 'earnings.dart';
+import 'terms_service.dart';
 
 class MenuDrawer extends StatelessWidget {
 
@@ -32,10 +34,18 @@ class MenuDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.attach_money),
               title: Text('Ganancias'),
+              onTap: (){
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => EarningScreen()));
+              }
             ), // ListTile
             ListTile(
               leading: Icon(Icons.priority_high),
               title: Text('Terminos y condiciones'),
+              onTap: () {
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => TermsService()));
+              },
             ),
           ],
         ),
