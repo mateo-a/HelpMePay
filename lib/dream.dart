@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'add_funds.dart';
 import 'models/user.dart';
 
 void main() {
@@ -46,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for (var u in jsonData) {
       final user =
-          User(u["index"], u["about"], u["name"], u["email"], u["picture"]);
+          User(u["index"], u["about"], u["name"], u["email"], u["picture"], u["balance"]);
       //User.fromJson(jsonData);
       users.add(user);
     }
@@ -149,6 +148,7 @@ class DetailPage extends StatelessWidget {
               children: <Widget>[
                 FlatButton(
                   child: Text('Expira pronto'),
+                  onPressed: (){},
                 ),
                 RaisedButton(
                   color: Colors.blueAccent,

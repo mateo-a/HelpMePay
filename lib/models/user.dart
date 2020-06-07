@@ -25,7 +25,7 @@ class User {
     data['name'] = this.name;
     data['email'] = this.email;
     data['picture'] = this.picture;
-    data['favoriteFruit'] = this.balance;
+    data['balance'] = this.balance;
     return data;
   }
 }
