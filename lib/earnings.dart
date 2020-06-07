@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'models/charts.dart';
+import 'drawer.dart';
 
 class EarningScreen extends StatelessWidget {
     final List<UserEarnings> data = [
@@ -37,6 +38,7 @@ class EarningScreen extends StatelessWidget {
       home: DefaultTabController(
         length: 2,
         child: Scaffold(
+          drawer: MenuDrawer(),
           appBar: AppBar(
             bottom: TabBar(
               tabs: [

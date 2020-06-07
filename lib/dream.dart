@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'models/user.dart';
+import 'drawer.dart';
 
 void main() {
   runApp(new MyApp());
@@ -58,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //Listar sueños
   Widget build(BuildContext context) {
     return new Scaffold(
+      drawer: MenuDrawer(),
       appBar: new AppBar(
         title: new Text(widget.title),
       ),

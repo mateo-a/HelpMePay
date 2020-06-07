@@ -1,5 +1,6 @@
 //import 'package:banking_app_account_ui/app_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/drawer_b.dart';
 
 //void main() => runApp(MyApp());
 
@@ -74,7 +75,7 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //drawer: AppDrawer(),
+        drawer: MenuDrawerB(),
         appBar: AppBar(
           iconTheme: IconThemeData(
             color: Colors.blue, //change your color here

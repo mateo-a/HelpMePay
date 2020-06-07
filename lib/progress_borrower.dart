@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/drawer_b.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ProgressBorrower extends StatefulWidget {
@@ -11,6 +12,7 @@ class _ProgressBorrowerState extends State<ProgressBorrower> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MenuDrawerB(),
       appBar: AppBar(
         title: Text("Recaudo de fondos"),
       ),

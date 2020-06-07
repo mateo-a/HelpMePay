@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'drawer.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -54,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //Listar datos
   Widget build(BuildContext context) {
     return new Scaffold(
+      drawer: MenuDrawer(),
       appBar: new AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),

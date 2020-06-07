@@ -22,7 +22,7 @@ class BorrowerScreen extends StatelessWidget {
         child: ListView(
           children: [
             Hero(
-              tag: user.id,
+              tag: user.index,
               child: Icon(
                 Icons.person,
                 size: 96,
@@ -30,7 +30,7 @@ class BorrowerScreen extends StatelessWidget {
               ),
             ),
             Hero(
-              tag: user.username,
+              tag: user.name,
               child: Material(
                 type: MaterialType.transparency,
                 child: Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/drawer_b.dart';
 
 class FormScreen extends StatefulWidget {
   @override
@@ -170,6 +171,7 @@ class FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: MenuDrawerB(),
         appBar: AppBar(title: Text("Llena tus datos")),
         body: Form(
           key: _formKey,
