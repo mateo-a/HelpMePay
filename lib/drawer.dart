@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'earnings.dart';
 import 'terms_service.dart';
+import 'earnings_by_borrower.dart';
+import 'dream.dart';
 
 class MenuDrawer extends StatelessWidget {
 
@@ -24,7 +25,7 @@ class MenuDrawer extends StatelessWidget {
               title: Text('Financia un sueño'),
               onTap: () {
                 Navigator.push(context, 
-                MaterialPageRoute(builder: (context) => MyHomePage()));
+                MaterialPageRoute(builder: (context) => MyDreamHomePage()));
               },
             ),
             ListTile(
@@ -38,7 +39,15 @@ class MenuDrawer extends StatelessWidget {
                 Navigator.push(context, 
                 MaterialPageRoute(builder: (context) => EarningScreen()));
               }
-            ), // ListTile
+            ),
+            ListTile(
+              leading: Icon(Icons.attach_money),
+              title: Text('Financiados'),
+              onTap: (){
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => EarningsByBorrower()));
+              }
+            ),  // ListTile
             ListTile(
               leading: Icon(Icons.priority_high),
               title: Text('Terminos y condiciones'),
