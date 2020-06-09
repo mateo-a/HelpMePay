@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/drawer_b.dart';
 import 'borrower_profile.dart';
+import 'models/loan.dart';
 
 class FormScreen extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
+  final _loan = Loan(0,0,"","","","");
   int _amount;
   String _phoneNumber;
   String _dropdownValue;
@@ -33,6 +35,9 @@ class FormScreenState extends State<FormScreen> {
       },
       onSaved: (String value) {
         _amount = int.parse(value);
+        setState(() {
+        _loan.amount = _amount;
+        });
       },
     );
   }
@@ -48,7 +53,7 @@ class FormScreenState extends State<FormScreen> {
       },
       onSaved: (String value) {
         _phoneNumber = value;
-      },
+        },
     );
   }
 
@@ -63,6 +68,7 @@ class FormScreenState extends State<FormScreen> {
       onChanged: (String newValue) {
         setState(() {
           _dropdownValue = newValue;
+          _loan.whatFor = newValue;
         });
       },
       items: <String>['Moto', 'Carro', 'Licencia', 'Pase']
@@ -86,6 +92,7 @@ class FormScreenState extends State<FormScreen> {
       onChanged: (String newValue) {
         setState(() {
           _installments = newValue;
+          _loan.installments = int.parse(newValue);
         });
       },
       items: <String>['12', '24', '36']
@@ -111,6 +118,7 @@ class FormScreenState extends State<FormScreen> {
       },
       onSaved: (String value) {
         _story = value;
+        _loan.story = value;
       },
     );
   }
@@ -130,21 +138,21 @@ class FormScreenState extends State<FormScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cantidad:'),
-                    Text('$_amount'),
+                    Text('$_loan.amount'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cuotas:'),
-                    Text('$_installments')    
+                    Text('$_loan.installments')    
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Objetivo:'),
-                    Text('$_dropdownValue')  
+                    Text('$_loan.whatFor')  
                   ],
                 ),
                 
@@ -227,8 +235,7 @@ class FormScreenState extends State<FormScreen> {
                             });
                           },
                         ), 
-                        Container(
-                          
+                        Container(                          
                           child: Expanded(
                             child: Text("Confirmo que he leido y acepto los terminos y condiciones del servicio"), 
                           ), 
@@ -241,9 +248,11 @@ class FormScreenState extends State<FormScreen> {
                         'Submit',
                         style: TextStyle(color: Colors.blue, fontSize: 16),
                       ),
-                      onPressed: () => {
-                        if(_formKey.currentState.validate()) {
-                          _showMyDialog(),
+                      onPressed: () {
+                        final form = _formKey.currentState;
+                        if(form.validate()) {
+                          _showMyDialog();
+                          form.save();
                         }
                       },
                     ),
