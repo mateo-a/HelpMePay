@@ -40,7 +40,7 @@ class TermsService extends StatelessWidget {
             padding: EdgeInsets.all(14),
             child: RaisedButton(
               onPressed: () {},
-              child: const Text('Acepto condiciones'),
+              child: const Text('Lo entiendo y deseo continuar'),
             ),
           ),
         ],

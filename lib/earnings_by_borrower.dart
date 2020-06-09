@@ -8,29 +8,17 @@ import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'models/user.dart';
 
-class EarningsByBorrower extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Prestatario',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(title: 'Prestatario'),
-    );
-  }
-}
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class EarningsByBorrower extends StatefulWidget {
+  EarningsByBorrower({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _EarningsByBorrowerState createState() => new _EarningsByBorrowerState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _EarningsByBorrowerState extends State<EarningsByBorrower> {
   //Conectarse a la API y cargar datos
   Future<List<User>> _getUsers() async {
     var response = await http
@@ -57,23 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       drawer: MenuDrawer(),
       appBar: new AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              new MaterialPageRoute(
-                builder: (context) => EarningsByBorrower(),
-              ),
-            );
-          }, //
-        ),
-        title: new Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(FontAwesomeIcons.users),
-          ),
-        ],
+        title: Text("Ganancias por inversión"),
       ),
       body: Container(
         child: FutureBuilder(

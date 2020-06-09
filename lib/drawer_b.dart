@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'form.dart';
 import 'pay_history.dart';
 import 'terms_service.dart';
 import 'borrower_profile.dart';
+import 'empty_state.dart';
 
 class MenuDrawerB extends StatelessWidget {
   @override
@@ -29,9 +29,8 @@ class MenuDrawerB extends StatelessWidget {
               leading: Icon(Icons.people),
               title: Text('Solicita tu préstamo'),
               onTap: (){
-                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FormScreen()),
-            );
+                    Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EmptyState()));
               },
             ),
             ListTile(

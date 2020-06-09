@@ -29,7 +29,7 @@ class FormScreenState extends State<FormScreen> {
         } else if (num.tryParse(value) > 1000000 || num.tryParse(value) < 50000) {
           return 'Cantidad minima: 50000, máximo: 1.000.000';
         }
-        return null;
+        return value;
       },
       onSaved: (String value) {
         _amount = int.parse(value);
@@ -44,7 +44,7 @@ class FormScreenState extends State<FormScreen> {
         if (value.isEmpty) {
           return 'Se requiere un numero de teléfono';
         }
-        return null;
+        return value;
       },
       onSaved: (String value) {
         _phoneNumber = value;
@@ -107,15 +107,16 @@ class FormScreenState extends State<FormScreen> {
         if (value.isEmpty) {
           return 'Deja tu historia para convencer a los inversores';
         }
-        return null;
+        return value;
       },
       onSaved: (String value) {
         _story = value;
       },
     );
   }
-
+  
   Future<void> _showMyDialog() async {
+    print(_amount);
     return showDialog<void>(
       context: context,
       barrierDismissible: true, // user must tap button!

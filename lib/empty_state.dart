@@ -1,31 +1,40 @@
 import "package:flutter/material.dart";
+import 'package:flutterapp/drawer_b.dart';
+import 'form.dart';
 
 class EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MenuDrawerB(),
       appBar: AppBar(
-        centerTitle: true,
         title: Text('Solicita un prestamo'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding: EdgeInsets.all(14),
+          Center(
             child: Text('Estas a unos pasos de completar '
                 'tus sueño. Completa el formulario para '
-                'solicitar tu prestamo'),
+                'solicitar tu prestamo', textAlign: TextAlign.center,),
           ),
+          SizedBox(height: 50),
           Container(
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FormScreen()),
+                );
+              },
               child: const Text('Añadir prestamo'),
             ),
           ),
         ],
       ),
+      )
+      
     );
     throw UnimplementedError();
   }

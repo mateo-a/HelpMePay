@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'drawer_b.dart';
 //import 'models/user.dart';
 
 class BorrowerScreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class BorrowerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MenuDrawerB(),
       appBar: AppBar(
         title: Text("Member Profile"),
       ),
@@ -24,7 +26,7 @@ class BorrowerScreen extends StatelessWidget {
               child: Icon(
                 Icons.person,
                 size: 96,
-                color: Theme.of(context).primaryColor,
+                color: Colors.white,
               ),
             ),
             Container(
