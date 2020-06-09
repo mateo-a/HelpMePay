@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'form.dart';
 import 'pay_history.dart';
 import 'terms_service.dart';
+import 'borrower_profile.dart';
 
 class MenuDrawerB extends StatelessWidget {
   @override
@@ -10,13 +11,19 @@ class MenuDrawerB extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text('Lenora Rodriguez'),
-              accountEmail: Text('Lenora@gmail.com'),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: Icon(Icons.people),
+            GestureDetector(
+                child: UserAccountsDrawerHeader(
+                accountName: Text('Lenora Rodriguez'),
+                accountEmail: Text('Lenora@gmail.com'),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.people),
+                ),
               ),
+              onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BorrowerScreen()),);
+              },
             ),
             ListTile(
               leading: Icon(Icons.people),

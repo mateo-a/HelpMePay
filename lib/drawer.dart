@@ -29,10 +29,6 @@ class MenuDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.payment),
-              title: Text('Añade Fondos'),
-            ),
-            ListTile(
               leading: Icon(Icons.attach_money),
               title: Text('Ganancias'),
               onTap: (){

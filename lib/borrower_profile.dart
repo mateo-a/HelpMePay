@@ -1,15 +1,12 @@
-// add in MyApp to test:
-//  final daniela = new User.fromJson(json.decode(
-//      '{"name": "daniela", "id": "123456", "username": "dani01", "email": "er@ero.er"}'));
 import 'package:flutter/material.dart';
-import 'models/user.dart';
+//import 'models/user.dart';
 
 class BorrowerScreen extends StatelessWidget {
-  final User user;
+  //final User user;
 
-  const BorrowerScreen({Key key, @required this.user})
-      : assert(user != null),
-        super(key: key);
+  // const BorrowerScreen({Key key, @required this.user})
+  //     : assert(user != null),
+  //       super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,23 +18,24 @@ class BorrowerScreen extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: ListView(
           children: [
-            Hero(
-              tag: user.index,
+            Container(
+              color: Colors.blue,
+              height: 400, 
               child: Icon(
                 Icons.person,
                 size: 96,
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            Hero(
-              tag: user.name,
+            Container(
               child: Material(
                 type: MaterialType.transparency,
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: Center(
                     child: Text(
-                      user.name,
+                      "Lenora Martinez",
+                      //user.name,
                       textScaleFactor: 2,
                     ),
                   ),
@@ -45,8 +43,10 @@ class BorrowerScreen extends StatelessWidget {
               ),
             ),
             Center(
-              child: Text(
-                "Send request",
+              child:
+              RaisedButton(
+                child: Text('Make a Payment'),
+                onPressed: () {},
               ),
             )
           ],

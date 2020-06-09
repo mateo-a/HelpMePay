@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/drawer_b.dart';
+import 'borrower_profile.dart';
 
 class FormScreen extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
-  String _amount;
+  int _amount;
   String _phoneNumber;
   String _dropdownValue;
   String _installments;
@@ -20,15 +21,18 @@ class FormScreenState extends State<FormScreen> {
 
   Widget _buildQty() {
     return TextFormField(
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Cuánto necesitas'),
       validator: (String value){
-        if (value.isEmpty) {
-          return 'Ingresa la cantidad para el prestamo';
+        if (num.tryParse(value) == null ) {
+          return 'Ingresa un numero válido';
+        } else if (num.tryParse(value) > 1000000 || num.tryParse(value) < 50000) {
+          return 'Cantidad minima: 50000, máximo: 1.000.000';
         }
         return null;
       },
       onSaved: (String value) {
-        _amount = value;
+        _amount = int.parse(value);
       },
     );
   }
@@ -121,9 +125,29 @@ class FormScreenState extends State<FormScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Cantidad: \t $_amount'),
-                Text('Cuotas: \t $_installments'),
-                Text('Para: \t $_dropdownValue'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('Cantidad:'),
+                    Text('$_amount'),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('Cuotas:'),
+                    Text('$_installments')    
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text('Objetivo:'),
+                    Text('$_dropdownValue')  
+                  ],
+                ),
+                
+                
               ],
             ),
           ),
@@ -159,7 +183,10 @@ class FormScreenState extends State<FormScreen> {
             FlatButton(
               child: Text('Aceptar'),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => BorrowerScreen()),
+                );
               },
             ),
           ],
@@ -176,52 +203,54 @@ class FormScreenState extends State<FormScreen> {
         body: Form(
           key: _formKey,
           child:Container(
-            margin: EdgeInsets.all(24),
-            child: Form(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _buildQty(),
-                  _buildphoneNumber(),
-                  SizedBox(height: 16),
-                  _buildDream(),
-                  SizedBox(height: 16),
-                  _buildInstallments(),
-                  _buildStory(),
-                  SizedBox(height:20),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: accepted,
-                        onChanged: (bool value) {
-                          setState(() {
-                            accepted = value; 
-                          });
-                        },
-                      ), 
-                      Container(
-                        
-                        child: Expanded(
-                          child: Text("Confirmo que he leido y acepto los terminos y condiciones del servicio"), 
+            child: SingleChildScrollView(
+              child: Form(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buildQty(),
+                    _buildphoneNumber(),
+                    SizedBox(height: 16),
+                    _buildDream(),
+                    SizedBox(height: 16),
+                    _buildInstallments(),
+                    _buildStory(),
+                    SizedBox(height:20),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: accepted,
+                          onChanged: (bool value) {
+                            setState(() {
+                              accepted = value; 
+                            });
+                          },
                         ), 
-                      )
-                    ]
-                  ),
-                  SizedBox(height: 100),
-                  RaisedButton(
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                        Container(
+                          
+                          child: Expanded(
+                            child: Text("Confirmo que he leido y acepto los terminos y condiciones del servicio"), 
+                          ), 
+                        )
+                      ]
                     ),
-                    onPressed: () => {
-                      if(_formKey.currentState.validate()) {
-                        _showMyDialog(),
-                      }
-                    },
-                  ),
-                ],
-              ),
-            )
+                    SizedBox(height: 100),
+                    RaisedButton(
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.blue, fontSize: 16),
+                      ),
+                      onPressed: () => {
+                        if(_formKey.currentState.validate()) {
+                          _showMyDialog(),
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ) 
+            ),
+            margin: EdgeInsets.all(24),
           )
         )
       );
