@@ -3,30 +3,12 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'models/user.dart';
 import 'drawer.dart';
 
-void main() {
-  runApp(new MyApp());
-//  runApp(MaterialApp(home: Scaffold(body: SamplePage())));
-}
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Financia un sueño',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(title: 'Financia un sueño'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class MyDreamHomePage extends StatefulWidget {
+  MyDreamHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
@@ -34,7 +16,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyDreamHomePage> {
   //Conectarse a la API y cargar datos
   Future<List<User>> _getUsers() async {
     var response = await http
@@ -61,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return new Scaffold(
       drawer: MenuDrawer(),
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text("Financia un sueño"),
       ),
       body: Container(
         child: FutureBuilder(
@@ -200,8 +182,8 @@ class _MoneySliderState extends State<MoneySlider> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    new MaterialPageRoute(
-                      builder: (context) => MyApp(),
+                     MaterialPageRoute(
+                      builder: (context) => MyDreamHomePage(),
                     ),
                   );
                 },
@@ -214,26 +196,9 @@ class _MoneySliderState extends State<MoneySlider> {
 
     return new Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              new MaterialPageRoute(
-                builder: (context) => MyApp(),
-              ),
-            );
-          }, //
-        ),
         title: Text("Financia a este worker"),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(FontAwesomeIcons.coins),
-              onPressed: () {
-                //
-              }),
-        ],
       ),
+      drawer: MenuDrawer(),
       body: Container(
         color: Color(0xffE5E5E5),
         child: Column(
