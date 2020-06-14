@@ -12,12 +12,27 @@ class FormScreen extends StatefulWidget {
 
 class FormScreenState extends State<FormScreen> {
   final _loan = Loan(0,0,"","","","");
+  final _amountCont = new TextEditingController();
+  final _storyCont = new TextEditingController();
   int _amount;
   String _phoneNumber;
   String _dropdownValue;
   String _installments;
   String _story;
   bool accepted = false; 
+
+  // FormScreenState() {
+  //   _amountCont.addListener(_amountListen);
+  //   _storyCont.addListener(_storyListen);
+  // }
+  
+  // void _amountListen() {
+  //   if (_.text.isEmpty) {
+  //     _email = "";
+  //   } else {
+  //     _email = _emailFilter.text;
+  //   }
+  // }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -33,7 +48,7 @@ class FormScreenState extends State<FormScreen> {
         }
         return value;
       },
-      onSaved: (String value) {
+      onChanged: (String value) {
         _amount = int.parse(value);
         setState(() {
         _loan.amount = _amount;
@@ -51,7 +66,7 @@ class FormScreenState extends State<FormScreen> {
         }
         return value;
       },
-      onSaved: (String value) {
+      onChanged: (String value) {
         _phoneNumber = value;
         },
     );
@@ -116,7 +131,7 @@ class FormScreenState extends State<FormScreen> {
         }
         return value;
       },
-      onSaved: (String value) {
+      onChanged: (String value) {
         _story = value;
         _loan.story = value;
       },
@@ -138,21 +153,21 @@ class FormScreenState extends State<FormScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cantidad:'),
-                    Text('$_loan.amount'),
+                    Text('${_loan.amount}'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cuotas:'),
-                    Text('$_loan.installments')    
+                    Text('${_loan.installments}')    
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Objetivo:'),
-                    Text('$_loan.whatFor')  
+                    Text('${_loan.whatFor}')  
                   ],
                 ),
                 
