@@ -51,7 +51,7 @@ class FormScreenState extends State<FormScreen> {
       onChanged: (String value) {
         _amount = int.parse(value);
         setState(() {
-        _loan.amount = _amount;
+        _loan.monto = _amount;
         });
       },
     );
@@ -83,7 +83,7 @@ class FormScreenState extends State<FormScreen> {
       onChanged: (String newValue) {
         setState(() {
           _dropdownValue = newValue;
-          _loan.whatFor = newValue;
+          _loan.titulo = newValue;
         });
       },
       items: <String>['Moto', 'Carro', 'Licencia', 'Pase']
@@ -107,7 +107,7 @@ class FormScreenState extends State<FormScreen> {
       onChanged: (String newValue) {
         setState(() {
           _installments = newValue;
-          _loan.installments = int.parse(newValue);
+          _loan.totalcuotas = int.parse(newValue);
         });
       },
       items: <String>['12', '24', '36']
@@ -133,7 +133,7 @@ class FormScreenState extends State<FormScreen> {
       },
       onChanged: (String value) {
         _story = value;
-        _loan.story = value;
+        _loan.descripcion = value;
       },
     );
   }
@@ -153,21 +153,21 @@ class FormScreenState extends State<FormScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cantidad:'),
-                    Text('${_loan.amount}'),
+                    Text('${_loan.monto}'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cuotas:'),
-                    Text('${_loan.installments}')    
+                    Text('${_loan.totalcuotas}')    
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Objetivo:'),
-                    Text('${_loan.whatFor}')  
+                    Text('${_loan.titulo}')  
                   ],
                 ),
                 
