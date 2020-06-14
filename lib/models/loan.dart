@@ -1,12 +1,12 @@
-class Loan {
-  int amount;
-  int installments; 
-  String status;
-  String expiration;
-  String whatFor;
-  String story;
+  class Loan {
+  int monto;
+  int totalcuotas; 
+  String estado;
+  String fechalimite;
+  String titulo;
+  String descripcion;
 
-  Loan(this.amount, this.installments, this.status, this.expiration, this.whatFor,this.story);
+  Loan(this.monto, this.totalcuotas, this.estado, this.fechalimite, this.titulo ,this.descripcion);
 
 //  factory User.fromJson(Map<String, dynamic> json) => User(
 //        index: json['index'],
@@ -18,12 +18,12 @@ class Loan {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['amount'] = this.amount;
-    data['installments'] = this.installments;
-    data['status'] = this.status;
-    data['expiration'] = this.expiration;
-    data['whatFor'] = this.whatFor;
-    data['story'] = this.story;
+    data['monto'] = this.monto;
+    data['totalcuotas'] = this.totalcuotas;
+    data['estado'] = this.estado;
+    data['fechalimite'] = this.fechalimite;
+    data['titulo'] = this.titulo;
+    data['descripcion'] = this.descripcion;
     return data;
   }
 
