@@ -49,8 +49,8 @@ class EarningScreen extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              Container(
-                child: Column(
+              Expanded(
+                child: ListView(
                   children: <Widget>[
                     Center(
                       child: UserChart(data: data),
