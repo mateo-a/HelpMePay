@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Load cross-platform
+  universal_io: ^1.0.1
   # To connect the API
   http: ^0.12.1
   # Used to show percent circle in progress_b.dart

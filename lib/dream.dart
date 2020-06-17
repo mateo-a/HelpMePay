@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'models/user.dart';
+import 'models/loan.dart';
 import 'drawer.dart';
-
 
 class MyDreamHomePage extends StatefulWidget {
   MyDreamHomePage({Key key, this.title}) : super(key: key);
@@ -18,23 +17,22 @@ class MyDreamHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyDreamHomePage> {
   //Conectarse a la API y cargar datos
-  Future<List<User>> _getUsers() async {
+  Future<List<Loan>> _getUsers() async {
     var response = await http
-        .get("http://www.json-generator.com/api/json/get/cfSVlomvTm?indent=2");
+        .get("https://helpmepay.rj.r.appspot.com/api/negocios/abiertos/");
 
     var jsonData = json.decode(response.body);
 
-    List<User> users = [];
+    List<Loan> loans = [];
 
     for (var u in jsonData) {
-      final user =
-          User(u["index"], u["about"], u["name"], u["email"], u["picture"], u["balance"]);
-      //User.fromJson(jsonData);
-      users.add(user);
+      final loan = Loan(u["monto"], u["totalcuotas"], u["estado"], u["fechalimite"], u["titulo"], u["descripcion"]);
+        //u.fromJson(jsonData);
+      loans.add(loan);
     }
-    print(users.length);
+    print(loans.length);
 
-    return users;
+    return loans;
   }
 
   @override
@@ -59,10 +57,10 @@ class _MyHomePageState extends State<MyDreamHomePage> {
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundImage:
-                          NetworkImage(snapshot.data[index].picture),
-                    ),
-                    title: Text(snapshot.data[index].name),
-                    subtitle: Text(snapshot.data[index].email),
+                          NetworkImage("NP") //(snapshot.data[index].picture),
+                    ), 
+                    title: Text(snapshot.data[index].titulo),
+                    subtitle: Text(snapshot.data[index].descripcion),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -83,15 +81,15 @@ class _MyHomePageState extends State<MyDreamHomePage> {
 
 class DetailPage extends StatelessWidget {
 //Detalle de sueño/historia
-  final User user;
+  final Loan loan;
 
-  DetailPage(this.user);
+  DetailPage(this.loan);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(user.name),
+        title: Text(loan.titulo),
       ),
       body: SafeArea(
           child: Column(
@@ -100,7 +98,7 @@ class DetailPage extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             child: CircleAvatar(
               radius: 50.0,
-              backgroundImage: NetworkImage(user.picture),
+              backgroundImage: NetworkImage("NP"), //(user.picture)
             ),
           ),
           Container(
@@ -110,7 +108,7 @@ class DetailPage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(
-                      user.about,
+                      loan.descripcion,
                       textAlign: TextAlign.justify,
                     ),
                   ),
@@ -132,7 +130,7 @@ class DetailPage extends StatelessWidget {
               children: <Widget>[
                 FlatButton(
                   child: Text('Expira pronto'),
-                  onPressed: (){},
+                  onPressed: () {},
                 ),
                 RaisedButton(
                   color: Colors.blueAccent,
@@ -182,7 +180,7 @@ class _MoneySliderState extends State<MoneySlider> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                     MaterialPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => MyDreamHomePage(),
                     ),
                   );
