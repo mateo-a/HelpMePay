@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/drawer_b.dart';
 import 'borrower_profile.dart';
 import 'models/loan.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class FormScreen extends StatefulWidget {
   @override
@@ -11,28 +13,35 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
-  final _loan = Loan(0,0,"","","","");
-  final _amountCont = new TextEditingController();
-  final _storyCont = new TextEditingController();
   int _amount;
   String _phoneNumber;
-  String _dropdownValue;
+  String _titulo;
   String _installments;
   String _story;
-  bool accepted = false; 
+  bool accepted = false;
+  String expiration = (DateTime.now().add(Duration(days: 30)).toString()); 
 
-  // FormScreenState() {
-  //   _amountCont.addListener(_amountListen);
-  //   _storyCont.addListener(_storyListen);
-  // }
-  
-  // void _amountListen() {
-  //   if (_.text.isEmpty) {
-  //     _email = "";
-  //   } else {
-  //     _email = _emailFilter.text;
-  //   }
-  // }
+  Future<Loan> crearNegocio(String titulo, String fechalimite, String worker, String monto, String descripcion, String totalcuotas) async {
+    final http.Response response = await http.post(
+      'https://helpmepay.rj.r.appspot.com/api/negocios/add',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'titulo': titulo,
+        'fechalimite': fechalimite,
+        'worker': worker,
+        'monto': monto,
+        'descripcion': descripcion,
+        'totalcuotas': totalcuotas
+      }),
+    );
+    if (response.statusCode == 201) {
+      return Loan.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Creación de prestamo fallida');
+    }
+  }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -50,9 +59,6 @@ class FormScreenState extends State<FormScreen> {
       },
       onChanged: (String value) {
         _amount = int.parse(value);
-        setState(() {
-        _loan.monto = _amount;
-        });
       },
     );
   }
@@ -76,14 +82,13 @@ class FormScreenState extends State<FormScreen> {
     return DropdownButton<String>(
       isExpanded: true,
       hint: Text('Para qué es el préstamo'),
-      value: _dropdownValue,
+      value: _titulo,
       icon: Icon(Icons.arrow_drop_down),
       iconSize: 30,
       elevation: 20,
       onChanged: (String newValue) {
         setState(() {
-          _dropdownValue = newValue;
-          _loan.titulo = newValue;
+          _titulo = newValue;
         });
       },
       items: <String>['Moto', 'Carro', 'Licencia', 'Pase']
@@ -107,7 +112,6 @@ class FormScreenState extends State<FormScreen> {
       onChanged: (String newValue) {
         setState(() {
           _installments = newValue;
-          _loan.totalcuotas = int.parse(newValue);
         });
       },
       items: <String>['12', '24', '36']
@@ -133,7 +137,6 @@ class FormScreenState extends State<FormScreen> {
       },
       onChanged: (String value) {
         _story = value;
-        _loan.descripcion = value;
       },
     );
   }
@@ -153,21 +156,21 @@ class FormScreenState extends State<FormScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cantidad:'),
-                    Text('${_loan.monto}'),
+                    Text('$_amount'),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Cuotas:'),
-                    Text('${_loan.totalcuotas}')    
+                    Text('$_installments')    
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text('Objetivo:'),
-                    Text('${_loan.titulo}')  
+                    Text('$_titulo')  
                   ],
                 ),
                 
@@ -180,6 +183,7 @@ class FormScreenState extends State<FormScreen> {
               child: Text('Aceptar'),
               onPressed: () {
                 _showConfirmation();
+                crearNegocio(_titulo, "81234568", expiration, _amount.toString(), _story, _installments);
               },
             ),
           ],
