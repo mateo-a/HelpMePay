@@ -5,6 +5,7 @@ import 'models/loan.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+//This class contains the construction parameters of the form screen
 class FormScreen extends StatefulWidget {
   @override
   FormScreenState createState() {
@@ -21,6 +22,7 @@ class FormScreenState extends State<FormScreen> {
   bool accepted = false;
   String expiration = (DateTime.now().add(Duration(days: 30)).toString()); 
 
+  // This widget creates a new card with the info of a loan 
   Future<Loan> crearNegocio(String titulo, String fechalimite, String worker, String monto, String descripcion, String totalcuotas) async {
     final http.Response response = await http.post(
       'https://helpmepay.rj.r.appspot.com/api/negocios/add',
@@ -45,6 +47,7 @@ class FormScreenState extends State<FormScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
+  //textformfield to write the amount for loan 
   Widget _buildQty() {
     return TextFormField(
       keyboardType: TextInputType.number,
@@ -63,6 +66,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  // this is the constructor of the fromfield to enter phone number 
   Widget _buildphoneNumber() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Déjanos tu teléfono'),
@@ -78,6 +82,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  // theis is the constructor for the dropdown form list for available dreams 
   Widget _buildDream() {
     return DropdownButton<String>(
       isExpanded: true,
@@ -101,6 +106,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  // constructor for the dropdown to select the number of installments 
   Widget _buildInstallments() {
     return DropdownButton<String>(
       isExpanded: true,
@@ -114,7 +120,7 @@ class FormScreenState extends State<FormScreen> {
           _installments = newValue;
         });
       },
-      items: <String>['12', '24', '36']
+      items: <String>['12', '24', '36'] // installments available
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
@@ -124,6 +130,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  //constructs the textarea for the user to write his/her story
   Widget _buildStory() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Cuéntanos tu historia'),
@@ -141,11 +148,12 @@ class FormScreenState extends State<FormScreen> {
     );
   }
   
+  // and async widget that builds the 
   Future<void> _showMyDialog() async {
     print(_amount);
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, // user must tap button!
+      barrierDismissible: true, 
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Detalle del Préstamo'),
@@ -173,8 +181,6 @@ class FormScreenState extends State<FormScreen> {
                     Text('$_titulo')  
                   ],
                 ),
-                
-                
               ],
             ),
           ),
@@ -192,6 +198,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  // this constructior builds the confirmation message after loan details have been confirmed 
   Future<void> _showConfirmation() async {
     return showDialog<void>(
       context: context,
@@ -223,6 +230,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  // the constructor that shows it all together. 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
