@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:flutterapp/drawer_b.dart';
 import 'form.dart';
 
+//screen for empty state. befor asking for a loan.
 class EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,6 @@ class EmptyState extends StatelessWidget {
         ],
       ),
       )
-      
     );
-    throw UnimplementedError();
   }
 }
