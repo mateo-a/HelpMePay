@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'models/charts.dart';
+import 'models/Userearnings.dart';
+import 'widgets/earningschart.dart';
 import 'drawer.dart';
 
 class EarningScreen extends StatelessWidget {
+    //a mocked list of user earnings that is to be replaced by information coming from the server
     final List<UserEarnings> data = [
     UserEarnings(
       day: "02-02-21",
@@ -31,7 +33,8 @@ class EarningScreen extends StatelessWidget {
       barColor: charts.ColorUtil.fromDartColor(Colors.blue),
     ),
   ];
-
+  
+  //the constructor of the screen 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,9 +55,11 @@ class EarningScreen extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: <Widget>[
+                    //the earnings dashboard
                     Center(
                       child: UserChart(data: data),
                     ),
+                    // the history of payments
                     ListTile(
                       leading: Icon(Icons.person),
                       title: Text('Nuevo Pago'),
