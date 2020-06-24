@@ -33,9 +33,6 @@ No download link available.
 ![](https://i.imgur.com/RuFKaar.jpg)
 ![](https://i.imgur.com/iAUuQRl.jpg)
 ![](https://i.imgur.com/0si0Xy3.jpg)
-![](https://i.imgur.com/0si0Xy3.jpg)
-![](https://i.imgur.com/0si0Xy3.jpg)
-![](https://i.imgur.com/0si0Xy3.jpg)
 ![](https://i.imgur.com/NbyqIuW.jpg)
 
 
