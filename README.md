@@ -1,8 +1,12 @@
 # HelpMePay
 ## An app to get your dream and help others get theirs. 
 
-HelpMePay is a crowlending application that helps rappi wokers 
+HelpMePay is a crowlending application that helps rappi workers get a loan to get assets that help them provide a better service as rappitenderos. 
 
+## Hierarchy
+
+The main source code for the frontend lives in the lib folder. every file in general hadles a different screen or view with their states. 
+The backend code is hosted in a separate repository at <https://github.com/mateo-a/HelpMePay_bck>
 
 ## How to use:
 
@@ -31,7 +35,7 @@ Screenshots.
 ## License
 MIT License
 
-Copyright (c) 202
+Copyright (c) 2020 Accelerate
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,9 +56,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ## Contacts 
-David Ovalle Ariza <1087@holbertonschool.com>
-John Alexander Urrego Sandoval <1220@holbertonschool.com>
-Miguel Antonio Cortés Muñoz <784@holbertonschool.com>
+* David Ovalle Ariza <1087@holbertonschool.com>
+* John Alexander Urrego Sandoval <1220@holbertonschool.com>
+* Miguel Antonio Cortés Muñoz <784@holbertonschool.com>
 
 ## Bugs 
 No known bugs or issues at this time
