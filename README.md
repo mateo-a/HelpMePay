@@ -1,37 +1,60 @@
-## Welcome to GitHub Pages
+# HelpMePay
+## An app to get your dream and help others get theirs. 
 
-You can use the [editor on GitHub](https://github.com/mateo-a/HelpMePay/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+HelpMePay is a crowlending application that helps rappi wokers 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+## How to use:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+To clone and run this application in your computer you will need git and flutter along with the android studio emulator or the web emulator by flutter. 
 
 ```markdown
-Syntax highlighted code block
+# Clone this repository
+$ git clone https://github.com/mateo-a/helpmepay.git
 
-# Header 1
-## Header 2
-### Header 3
+# Go into the repository
+$ cd HelpMePay
 
-- Bulleted
-- List
+# Install dependencies
+$ flutter packages get
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+# Run the app
+$ flutter run
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Download
+No download link available. 
 
-### Jekyll Themes
+## Screenshots
+Screenshots. 
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mateo-a/HelpMePay/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## License
+MIT License
 
-### Support or Contact
+Copyright (c) 202
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+## Contacts 
+David Ovalle Ariza <1087@holbertonschool.com>
+John Alexander Urrego Sandoval <1220@holbertonschool.com>
+Miguel Antonio Cortés Muñoz <784@holbertonschool.com>
+
+## Bugs 
+No known bugs or issues at this time
