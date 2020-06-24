@@ -4,7 +4,9 @@ import 'terms_service.dart';
 import 'borrower_profile.dart';
 import 'empty_state.dart';
 
+
 class MenuDrawerB extends StatelessWidget {
+  //Sidebar Menu for all inside views of the applications in the lender profile
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -42,7 +44,7 @@ class MenuDrawerB extends StatelessWidget {
               MaterialPageRoute(builder: (context) => PayHistory()),
             );
               },
-            ), // ListTile
+            ),
             ListTile(
               leading: Icon(Icons.priority_high),
               title: Text('Terminos y condiciones'),

@@ -4,6 +4,7 @@ import 'terms_service.dart';
 import 'earnings_by_borrower.dart';
 import 'dream.dart';
 
+// Sidebar menu for all the views of the lender menu
 class MenuDrawer extends StatelessWidget {
 
   @override
