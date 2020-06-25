@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../dream.dart';
 import '../dream2.dart';
 import '../drawer.dart';
 
@@ -35,7 +36,7 @@ class _MoneySliderState extends State<MoneySlider> {
                   Navigator.push(
                     context,
                      MaterialPageRoute(
-                      builder: (context) => MyDreamHomePage2(),
+                      builder: (context) => MyDreamHomePage(),
                     ),
                   );
                 },

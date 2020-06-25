@@ -22,7 +22,7 @@ class DetailPage extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             child: CircleAvatar(
               radius: 50.0,
-              backgroundImage: NetworkImage("NP"),
+              backgroundImage: NetworkImage(loan.worker),
             ),
           ),
           Container(

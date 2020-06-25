@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'models/loan.dart';
 import 'drawer.dart';
+import 'models/loan.dart';
 import 'widgets/dreamdetail.dart';
 
 //Page that loads all available dreams
@@ -20,21 +21,24 @@ class MyDreamHomePage extends StatefulWidget {
 //State for the page
 class _MyHomePageState extends State<MyDreamHomePage> {
   //Conectarse a la API y cargar datos
-  Future<List<Loan>> _getUsers() async {
+  Future<List<dynamic>> _getUsers() async {
     var response = await http
         .get("https://helpmepay.rj.r.appspot.com/api/negocios/abiertos/");
 
     var jsonData = json.decode(response.body);
+    if ( jsonData == null ) return [];
 
-    List<Loan> loans = [];
+    List<dynamic> loans = [];
 
-    for (var u in jsonData) {
-      final loan = Loan(u["monto"], u["totalcuotas"], u["estado"], u["fechalimite"], u["titulo"], u["descripcion"]);
+  for (var u in jsonData) {
+    var res = await http
+        .get("https://helpmepay.rj.r.appspot.com/api/workers/get/${u['worker']}");
+        var dataWorer = json.decode(res.body);
+      final loan = Loan(u["monto"], u["totalcuotas"], u["estado"], u["fechalimite"], u["titulo"], u["descripcion"], dataWorer["imagen"]);
         //u.fromJson(jsonData);
       loans.add(loan);
     }
     print(loans.length);
-
     return loans;
   }
 
@@ -60,7 +64,7 @@ class _MyHomePageState extends State<MyDreamHomePage> {
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundImage:
-                          NetworkImage("NP") //(snapshot.data[index].picture),
+                          NetworkImage(snapshot.data[index].worker),
                     ), 
                     title: Text(snapshot.data[index].titulo),
                     subtitle: Text(snapshot.data[index].descripcion),
