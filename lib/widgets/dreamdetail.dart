@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../models/loan.dart';
-import 'moneyslider.dart';
+import 'package:flutterapp/models/loan.dart';
+//import '../models/loan.dart';
+//import 'moneyslider.dart';
 
 class DetailPage extends StatelessWidget {
 //Detalle de sueño/historia
@@ -59,8 +60,9 @@ class DetailPage extends StatelessWidget {
                 RaisedButton(
                   color: Colors.blueAccent,
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MoneySlider()));
+                    Navigator.pushNamed(context, 'sliderDream');
+                    /*Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MoneySlider()));*/
                   },
                   child: Text('Ayudalo!'),
                 ),

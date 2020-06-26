@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../dream.dart';
-import '../dream2.dart';
-import '../drawer.dart';
+
+//import 'package:flutterapp/pages/dream.dart';
+//import 'package:flutterapp/pages/dream2.dart';
+import 'package:flutterapp/pages/drawer.dart';
 
 class MoneySlider extends StatefulWidget {
   @override
@@ -33,12 +34,13 @@ class _MoneySliderState extends State<MoneySlider> {
               new FlatButton(
                 child: new Text('Continuar'),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushNamed(context, 'dream');
+                  /*Navigator.push(
                     context,
                      MaterialPageRoute(
                       builder: (context) => MyDreamHomePage(),
                     ),
-                  );
+                  ); */
                 },
               ),
             ],
