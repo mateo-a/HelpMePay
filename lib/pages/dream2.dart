@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/loan.dart';
-import 'package:flutterapp/widgets/dreamdetail.dart';
+//import 'package:flutterapp/widgets/dreamdetail.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -68,11 +68,11 @@ class _MyHomePageState extends State<MyDreamHomePage2> {
                     title: Text(snapshot.data[index].name),
                     subtitle: Text(snapshot.data[index].email),
                     onTap: () {
-                      Navigator.push(
+                      /* Navigator.push(
                           context,
                           new MaterialPageRoute(
                               builder: (context) =>
-                                  DetailPage(snapshot.data[index])));
+                                  DetailPage(snapshot.data[index]))); */
                     },
                   );
                 },

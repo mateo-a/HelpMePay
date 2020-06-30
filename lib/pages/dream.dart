@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:flutterapp/pages/drawer.dart';
 import 'package:flutterapp/models/loan.dart';
-import 'package:flutterapp/widgets/dreamdetail.dart';
+// import 'package:flutterapp/widgets/dreamdetail.dart';
 
 //Page that loads all available dreams
 class MyDreamHomePage extends StatefulWidget {
@@ -69,11 +69,12 @@ class _MyHomePageState extends State<MyDreamHomePage> {
                     title: Text(snapshot.data[index].titulo),
                     subtitle: Text(snapshot.data[index].descripcion),
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushNamed(context, 'detailDream', arguments: snapshot.data[index]);
+                      /*Navigator.push(
                           context,
                           new MaterialPageRoute(
                               builder: (context) =>
-                                  DetailPage(snapshot.data[index])));
+                                  DetailPage(snapshot.data[index])));*/
                     },
                   );
                 },

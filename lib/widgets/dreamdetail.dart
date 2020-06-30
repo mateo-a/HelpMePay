@@ -6,12 +6,12 @@ import 'package:flutterapp/models/loan.dart';
 
 class DetailPage extends StatelessWidget {
 //Detalle de sueño/historia
-  final Loan loan;
-
-  DetailPage(this.loan);
-
   @override
   Widget build(BuildContext context) {
+  final Loan loan = ModalRoute.of(context).settings.arguments;
+
+  //DetailPage(this.loan);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(loan.titulo),

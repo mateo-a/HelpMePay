@@ -5,7 +5,7 @@ import 'package:flutterapp/pages/login.dart';
 import 'package:flutterapp/pages/signup.dart';
 import 'package:flutterapp/pages/dream.dart';
 import 'package:flutterapp/widgets/moneyslider.dart';
-// import 'package:flutterapp/widgets/dreamdetail.dart';
+import 'package:flutterapp/widgets/dreamdetail.dart';
 import 'package:flutterapp/pages/borrower_profile.dart';
 import 'package:flutterapp/pages/empty_state.dart';
 import 'package:flutterapp/pages/pay_history.dart';
@@ -21,7 +21,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
         'NewUser'             : ( BuildContext context ) => NewUser(),
         'dream'               : ( BuildContext context ) => MyDreamHomePage(),
         'sliderDream'         : ( BuildContext context ) => MoneySlider(),
-        //'detailDream'       : ( BuildContext context ) => DetailPage(loan),
+        'detailDream'         : ( BuildContext context ) => DetailPage(),
         'borrower'            : ( BuildContext context ) => BorrowerScreen(),
         'emptyState'          : ( BuildContext context ) => EmptyState(),
         'payHistory'          : ( BuildContext context ) => PayHistory(),
