@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+Loan loanFromJson(String str) => Loan.fromJson(json.decode(str));
+String loanToJson(Loan data) => json.encode(data.toJson());
+
 class Loan {
   int monto;
   int totalcuotas;
@@ -10,7 +15,7 @@ class Loan {
   Loan(this.monto, this.totalcuotas, this.estado, this.fechalimite, this.titulo,
       this.descripcion, this.worker);
 
- /*factory Loan.fromJson(Map<String, dynamic> json) => Loan(
+  /*factory Loan.fromJson(Map<String, dynamic> json) => Loan(
        monto: json['monto'],
        totalcuotas: json['totalcuotas'],
        estado: json['estado'],
