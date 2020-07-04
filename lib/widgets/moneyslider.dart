@@ -26,7 +26,7 @@ class _MoneySliderState extends State<MoneySlider> {
               child: new ListBody(
                 children: [
                   new Text(
-                      'Usted acaba de aportar \u0024$sliderValue para ayudar a este worker.\n\nPuedes seguir ayudando a otros Workers.'),
+                      'Acabas de aportar \u0024$sliderValue para ayudar a este worker.\n\nPuedes seguir ayudando a otros Workers.'),
                 ],
               ),
             ),
@@ -71,7 +71,7 @@ class _MoneySliderState extends State<MoneySlider> {
                 )),
               ),
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: 90.0),
             Container(
               child: Align(
                 child: Material(
@@ -88,11 +88,11 @@ class _MoneySliderState extends State<MoneySlider> {
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               child: Slider(
-                                min: 0.0,
-                                max: 1000000.0,
+                                min: 0,
+                                max: 1000000,
                                 divisions: 20,
                                 value: sliderValue,
-                                activeColor: Colors.blue[900],
+                                activeColor: Colors.blue[700],
                                 inactiveColor: Colors.blue[100],
                                 onChanged: (newValue) {
                                   setState(() {
@@ -106,7 +106,7 @@ class _MoneySliderState extends State<MoneySlider> {
                             padding: const EdgeInsets.all(16.0),
                             child: Container(
                                 child: Text(
-                              "Su contribución : \u0024$sliderValue",
+                              "Tu contribución : \u0024$sliderValue",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 22.0,
