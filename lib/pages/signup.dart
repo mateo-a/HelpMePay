@@ -1,340 +1,312 @@
-import 'package:flutter/material.dart';
-import 'package:flutterapp/models/investor_model.dart';
+import "package:flutter/material.dart";
+
 import 'package:flutterapp/models/worker_model.dart';
-import 'package:flutterapp/providers/investors_provider.dart';
 import 'package:flutterapp/providers/workers_provider.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/providers/usuario_provider.dart';
+import 'package:flutterapp/utils/utils.dart';
 
-class NewUser extends StatefulWidget {
-  @override
-  _NewUserState createState() => _NewUserState();
-}
 
-class _NewUserState extends State<NewUser> {
-  final formKey = GlobalKey<FormState>(); //usar para validar campos del form
+
+class Registro extends StatelessWidget {
+  final usuarioProvider = new UsuarioProvider();
   final workerProvider = new WorkersProvider();
-  final investorProvider = new InvestorsProvider(); // Proveedor para post HTTP
 
-  WorkerModel worker = new WorkerModel();
-  InvestorModel investor = new InvestorModel();
+  final WorkerModel worker = new WorkerModel();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: formKey,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight, end: Alignment.bottomLeft,
-                //colors: [Colors.deepOrange[300], Colors.red[300]]),
-                colors: [Colors.blue[200], Colors.blue[900]]),
+      body: Stack(
+        children: [
+          _crearFondo(context),
+          _loginForm(context),
+        ],
+      ),
+    );
+    //throw UnimplementedError();
+  }
+
+  Widget _loginForm(BuildContext context){
+    final bloc = Provider.of(context);
+    final size = MediaQuery.of(context).size;
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SafeArea(
+            child: Container(
+              height: 50.0,
+            )
           ),
-          child: ListView(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      _textNew(),
-                    ],
-                  ),
-                  _newName(),
-                  _newSurname(),
-                  _newDocId(),
-                  _newImage(),
-                  // NewEmail(),
-                  // PasswordInput(),
-                  _newInvestor(),
-                  _newWorker(),
-                ],
+          Container(
+            width: size.width * 0.85,
+            margin: EdgeInsets.symmetric(vertical: 30.0),
+            padding: EdgeInsets.symmetric(vertical: 50.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius:  BorderRadius.circular(5.0),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 3.0,
+                  offset: Offset(0.0, 5.0),
+                  spreadRadius: 3.0
+                )
+              ]
+            ),
+            child: Column(
+              children: [
+                Text ('Crear Cuenta', style: TextStyle(fontSize: 20.0),),
+                SizedBox(height: 30.0),
+                _crearEmail( bloc ),
+                SizedBox(height: 30.0),
+                _crearPassword( bloc ),
+                SizedBox(height: 30.0),
+                _crearNombre( bloc ),
+                SizedBox(height: 30.0),
+                _crearApellido( bloc ),
+                SizedBox(height: 30.0),
+                _crearCedula( bloc ),
+                SizedBox(height: 30.0),
+                _crearBoton( bloc ),
+                SizedBox(height: 20.0),
+                _nuevoUser(context),          
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 50),
+            child: Text('By proceeding you agree with the terms '
+                    'of service and the privacy policy.'),
               ),
+          SizedBox(height: 100.0)
+        ],
+      ),
+    );
+  }
+
+  Widget _nuevoUser(BuildContext context){
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      child: FlatButton(
+        child: Text ( ' ¿Ya tienes cuenta?   Login ',
+        style: TextStyle(
+          color: Colors.blue[900],
+          decoration: TextDecoration.underline)
+          ),
+        onPressed: ()=> Navigator.pushReplacementNamed(context, 'login'),
+      )
+    );
+  }
+  
+  _register(BuildContext context, LoginBloc bloc) async {
+    final info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
+    if ( info['ok'] ) {
+      worker.id       = '${info['localId']}';
+      worker.nombre   = '${bloc.nombre}';
+      worker.apellido = '${bloc.apellido}';
+      worker.cedula   = '${bloc.cedula}';
+      // worker.imagen  = '${bloc.imagen}';
+      // Navigator.pushReplacementNamed(context, 'borrower');
+      workerProvider.crearWorker(worker);
+    } else {
+      mostrarAlerta( context, info['message']);
+    }
+  }
+
+  Widget _crearBoton( LoginBloc bloc ){
+    // formValidStream
+    // snapshot.hasData
+    // true ? algo si true : algo si false
+    return StreamBuilder(
+      stream: bloc.formValidStreamRegister ,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return RaisedButton(
+          child: Container(
+            padding: EdgeInsets.symmetric( horizontal: 80.0, vertical: 15.0 ),
+            child: Text('Registrar'),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0)
+          ),
+          elevation: 0.0,
+          color: Colors.blue[900],
+          textColor: Colors.white,
+          onPressed: snapshot.hasData ? ()=> _register( context, bloc ) : null
+        );
+      },
+    );
+  }
+
+  Widget _crearCedula( LoginBloc bloc ) {
+
+    return StreamBuilder(
+      stream: bloc.cedulaStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container (
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+
+          child: TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              icon: Icon( Icons.call_to_action, color: Colors.blue[900] ),
+              hintText: 'Ej. 80123678',
+              labelText: 'Cedula',
+              //counterText: snapshot.data,
+              errorText: snapshot.error
+            ),
+            onChanged: bloc.changeCedula,
+          ),
+        );
+      },
+    );
+  }
+  
+  Widget _crearApellido( LoginBloc bloc ) {
+
+    return StreamBuilder(
+      stream: bloc.apellidoStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container (
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+
+          child: TextField(
+            keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.characters,
+            decoration: InputDecoration(
+              icon: Icon( Icons.perm_identity, color: Colors.blue[900] ),
+              hintText: 'Ej. Roa',
+              labelText: 'Apellido',
+              //counterText: snapshot.data,
+              errorText: snapshot.error
+            ),
+            onChanged: bloc.changeApellido,
+          ),
+        );
+      },
+    );
+  }
+  
+  Widget _crearNombre( LoginBloc bloc ) {
+
+    return StreamBuilder(
+      stream: bloc.nombreStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container (
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+
+          child: TextField(
+            keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.characters,
+            decoration: InputDecoration(
+              icon: Icon( Icons.perm_identity ,color: Colors.blue[900] ),
+              hintText: 'Ej. Fernando',
+              labelText: 'Nombre',
+              //counterText: snapshot.data,
+              errorText: snapshot.error
+            ),
+            onChanged: bloc.changeNombre,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _crearPassword( LoginBloc bloc ) {
+
+    return StreamBuilder(
+      stream: bloc.passwordStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container (
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+
+          child: TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon( Icons.lock_outline, color: Colors.blue[900] ),
+              labelText: 'Contraseña',
+              //counterText: snapshot.data,
+              errorText: snapshot.error
+            ),
+            onChanged: bloc.changePassword,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _crearEmail( LoginBloc bloc ) {
+
+    return StreamBuilder(
+      stream: bloc.emailStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+      
+      return Container (
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          icon: Icon( Icons.alternate_email, color: Colors.blue[900] ),
+          hintText: 'ejemplo@correo.com',
+          labelText: 'Correo electrónico',
+          //counterText: snapshot.data,
+          errorText: snapshot.error
+        ),
+        onChanged: bloc.changeEmail,
+      ),
+      );
+      },
+    );
+  }
+
+
+  Widget _crearFondo(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final fondoAzul = Container(
+      height: size.height * 0.4,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [Colors.blue[200], Colors.blue[900]]),
+      ),
+    );
+
+    final circulo = Container(
+      width: 100.0,
+      height: 100.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100.0),
+        color: Color.fromRGBO(255, 255, 255, 0.05)
+      )
+    );
+
+    return Stack(
+      children: [
+        fondoAzul,
+        Positioned(top: 70.0, left: -10.0, child: circulo),
+        Positioned(top: 90.0, left: 40.0, child: circulo),
+        Positioned(top: 150.0, right: -30.0, child: circulo),
+        Positioned(top: 180.0, right: 0.0, child: circulo),
+        Positioned(top: 210.0, left: 160, child: circulo),
+
+        Container(
+          padding: EdgeInsets.only(top: 50.0),
+          child: Column(  
+            children: [
+              SizedBox( width: double.infinity ),
+              Container(
+              padding: EdgeInsets.all(14),
+              child: Text('HelpMePay', style: TextStyle(fontSize: 18,
+                        fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+            )
             ],
-          ),
-        ),
-      ),
+          )
+        )
+      ],
     );
   }
-
-  Widget _newInvestor() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, right: 50, left: 200),
-      child: Container(
-        alignment: Alignment.bottomRight,
-        height: 30,
-        width: MediaQuery.of(context).size.width,
-        child: FlatButton(
-          onPressed: () {
-            _submitInvestor();
-            Navigator.pushNamed(context, 'dream');
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Inversionista',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _newWorker() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, right: 50, left: 200),
-      child: Container(
-        alignment: Alignment.bottomRight,
-        height: 30,
-        width: MediaQuery.of(context).size.width,
-        child: FlatButton(
-          onPressed: () {
-            _submitWorker();
-            Navigator.pushNamed(context, 'borrower');
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Trabajador',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-/*
-class NewEmail extends StatefulWidget {
-  @override
-  _NewEmailState createState() => _NewEmailState();
-}
-
-class _NewEmailState extends State<NewEmail> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, left: 50, right: 50),
-      child: Container(
-        height: 60,
-        width: MediaQuery.of(context).size.width,
-        child: TextField(
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            fillColor: Colors.lightBlueAccent,
-            labelText: 'E-mail',
-            labelStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PasswordInput extends StatefulWidget {
-  @override
-  _PasswordInputState createState() => _PasswordInputState();
-} */
-
-  Widget _newName() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0.0, left: 50, right: 50),
-      child: Container(
-        height: 75,
-        width: MediaQuery.of(context).size.width,
-        child: TextFormField(
-          initialValue: worker.nombre,
-          textCapitalization: TextCapitalization.sentences,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            fillColor: Colors.white,
-            labelText: 'Nombre',
-            labelStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          onSaved: (value) => worker.nombre = value,
-          validator: (value) {
-            if (value.length < 3) {
-              return 'Verifica el Nombre Ingresado';
-            } else {
-              return null;
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _newSurname() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0.0, left: 50, right: 50),
-      child: Container(
-        height: 75,
-        width: MediaQuery.of(context).size.width,
-        child: TextFormField(
-          initialValue: worker.apellido,
-          textCapitalization: TextCapitalization.sentences,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            fillColor: Colors.white,
-            labelText: 'Apellido',
-            labelStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          onSaved: (value) => worker.apellido= value,
-          validator: (value) {
-            if (value.length < 3) {
-              return 'Verifica el Apellido Ingresado';
-            } else {
-              return null;
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _newDocId() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0.0, left: 50, right: 50),
-      child: Container(
-        height: 75,
-        width: MediaQuery.of(context).size.width,
-        child: TextFormField(
-          initialValue: worker.cedula,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            fillColor: Colors.white,
-            labelText: 'Cedula',
-            labelStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          onSaved: (value) => worker.cedula = value,
-          validator: (value) {
-            if (value.length < 6) {
-              return 'Ingresa tu Documento de Identidad';
-            } else {
-              return null;
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _newImage() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 0.0, left: 50, right: 50),
-      child: Container(
-        height: 75,
-        width: MediaQuery.of(context).size.width,
-        child: TextFormField(
-          initialValue: worker.imagen,
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            fillColor: Colors.white,
-            labelText: 'Foto',
-            labelStyle: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          onSaved: (value) => worker.imagen = value,
-        ),
-      ),
-    );
-  }
-
-  Widget _textNew() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30.0, left: 10.0),
-      child: Container(
-        //color: Colors.green,
-        height: 200,
-        width: 200,
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 60,
-            ),
-            Center(
-              child: Text(
-                'HelpMePay es un servicio para alcanzar tus sueños',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _submitWorker() {
-
-    if ( !formKey.currentState.validate() ) return;
-
-    formKey.currentState.save();
-
-    print( worker.nombre );
-    print( worker.apellido );
-    print( worker.cedula );
-    print( worker.imagen );
-
-    workerProvider.crearWorker(worker);
-
-  }
-
-  void _submitInvestor() {
-
-    if ( !formKey.currentState.validate() ) return;
-
-    formKey.currentState.save();
-
-    print( investor.nombre );
-    print( investor.apellido );
-    print( investor.cedula );
-    print( investor.imagen );
-
-    investorProvider.crearInvestor(investor);
-    
-  }
-
 }
