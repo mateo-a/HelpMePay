@@ -18,7 +18,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
 
   return <String, WidgetBuilder> {
         'login'               : ( BuildContext context ) => Login(),
-        'NewUser'             : ( BuildContext context ) => NewUser(),
+        'registro'            : ( BuildContext context ) => Registro(),
         'dream'               : ( BuildContext context ) => MyDreamHomePage(),
         'sliderDream'         : ( BuildContext context ) => MoneySlider(),
         'detailDream'         : ( BuildContext context ) => DetailPage(),
