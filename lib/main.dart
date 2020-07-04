@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/pages/signup.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/pages/login.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 import 'package:flutterapp/routes/routes.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = new PreferenciasUsuario();
+  await prefs.initPrefs();
+  
+  runApp(MyApp());
+  
+  }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+
+      final prefs = new PreferenciasUsuario();
+      print( prefs.token );
+      print('============================');
+      print( prefs.localid );
+
+    return Provider(
+      child: MaterialApp(
       title: 'HelpMePay',
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
@@ -18,13 +34,14 @@ class MyApp extends StatelessWidget {
         print('Ruta llamada: ${settings.name}');
         
         return  MaterialPageRoute (
-          builder: ( BuildContext context ) => NewUser()
+          builder: ( BuildContext context ) => Login()
         );
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-    );
+      )
+    );  
   }
 }
