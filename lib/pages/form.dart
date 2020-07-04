@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+//import 'package:http/http.dart' as http;
+//import 'dart:convert';
 //import 'borrower_profile.dart';
 import 'package:flutterapp/pages/drawer_b.dart';
-import 'package:flutterapp/models/loan.dart';
+//import 'package:flutterapp/models/loan.dart';
 import 'package:flutterapp/providers/loan_provider.dart';
 
 //This class contains the construction parameters of the form screen
