@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class UsuarioProvider {
 
-  final String _firebaseToken = 'AIzaSyDqtd-gB1SIiMLbsKx3NqnHWV2khW5GrYA';
+  
   //final _prefs = new PreferenciasUsuario();
 
   Future<Map<String, dynamic>> login( String email, String password) async {
