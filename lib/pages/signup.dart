@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 
 import 'package:flutterapp/models/worker_model.dart';
 import 'package:flutterapp/providers/workers_provider.dart';
+import 'package:flutterapp/models/investor_model.dart';
+import 'package:flutterapp/providers/investors_provider.dart';
 import 'package:flutterapp/blocs/provider.dart';
 import 'package:flutterapp/providers/usuario_provider.dart';
 import 'package:flutterapp/utils/utils.dart';
@@ -11,8 +13,10 @@ import 'package:flutterapp/utils/utils.dart';
 class Registro extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
   final workerProvider = new WorkersProvider();
+  final investorProvider = new InvestorsProvider();
 
   final WorkerModel worker = new WorkerModel();
+  final InvestorModel investor = new InvestorModel();
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +73,19 @@ class Registro extends StatelessWidget {
                 SizedBox(height: 30.0),
                 _crearCedula( bloc ),
                 SizedBox(height: 30.0),
-                _crearBoton( bloc ),
+                Text ('Registrate como:', style: TextStyle(fontSize: 15.0),),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  SizedBox(),
+                  _crearBotonWorker( bloc ),
+                  SizedBox(width: 20.0),
+                  Text ('Ó', style: TextStyle(fontSize: 15.0)),
+                  SizedBox(width: 20.0),
+                  _crearBotonInvestor( bloc ),
+                  SizedBox(),
+                ],
+                ),
                 SizedBox(height: 20.0),
-                _nuevoUser(context),          
+                _nuevoUser(context),
               ],
             ),
           ),
@@ -99,8 +113,23 @@ class Registro extends StatelessWidget {
       )
     );
   }
+
+  _registerInvestor(BuildContext context, LoginBloc bloc) async {
+    final info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
+    if ( info['ok'] ) {
+      investor.id       = '${info['localId']}';
+      investor.nombre   = '${bloc.nombre}';
+      investor.apellido = '${bloc.apellido}';
+      investor.cedula   = '${bloc.cedula}';
+      // worker.imagen  = '${bloc.imagen}';
+      // Navigator.pushReplacementNamed(context, 'borrower');
+      investorProvider.crearInvestor(investor);
+    } else {
+      mostrarAlerta( context, info['message']);
+    }
+  }
   
-  _register(BuildContext context, LoginBloc bloc) async {
+  _registerWorker(BuildContext context, LoginBloc bloc) async {
     final info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
     if ( info['ok'] ) {
       worker.id       = '${info['localId']}';
@@ -115,7 +144,7 @@ class Registro extends StatelessWidget {
     }
   }
 
-  Widget _crearBoton( LoginBloc bloc ){
+    Widget _crearBotonInvestor( LoginBloc bloc ){
     // formValidStream
     // snapshot.hasData
     // true ? algo si true : algo si false
@@ -124,8 +153,8 @@ class Registro extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot){
         return RaisedButton(
           child: Container(
-            padding: EdgeInsets.symmetric( horizontal: 80.0, vertical: 15.0 ),
-            child: Text('Registrar'),
+            padding: EdgeInsets.symmetric( horizontal: 5.0, vertical: 15.0 ),
+            child: Text('Inversionista'),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0)
@@ -133,7 +162,31 @@ class Registro extends StatelessWidget {
           elevation: 0.0,
           color: Colors.blue[900],
           textColor: Colors.white,
-          onPressed: snapshot.hasData ? ()=> _register( context, bloc ) : null
+          onPressed: snapshot.hasData ? ()=> _registerInvestor( context, bloc ) : null
+        );
+      },
+    );
+  }
+
+  Widget _crearBotonWorker( LoginBloc bloc ){
+    // formValidStream
+    // snapshot.hasData
+    // true ? algo si true : algo si false
+    return StreamBuilder(
+      stream: bloc.formValidStreamRegister ,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return RaisedButton(
+          child: Container(
+            padding: EdgeInsets.symmetric( horizontal: 10.0, vertical: 15.0 ),
+            child: Text('Trabajador'),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0)
+          ),
+          elevation: 0.0,
+          color: Colors.blue[900],
+          textColor: Colors.white,
+          onPressed: snapshot.hasData ? ()=> _registerWorker( context, bloc ) : null
         );
       },
     );
