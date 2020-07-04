@@ -4,7 +4,6 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import 'package:flutterapp/pages/drawer_b.dart';
 
-
 class ProgressBorrower extends StatefulWidget {
   @override
   _ProgressBorrowerState createState() => _ProgressBorrowerState();
@@ -16,6 +15,7 @@ class _ProgressBorrowerState extends State<ProgressBorrower> {
     return Scaffold(
       drawer: MenuDrawerB(),
       appBar: AppBar(
+        backgroundColor: Colors.blue[700],
         title: Text("Recaudo de fondos"),
       ),
       body: Center(

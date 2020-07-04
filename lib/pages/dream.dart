@@ -26,16 +26,17 @@ class _MyHomePageState extends State<MyDreamHomePage> {
         .get("https://helpmepay.rj.r.appspot.com/api/negocios/abiertos/");
 
     var jsonData = json.decode(response.body);
-    if ( jsonData == null ) return [];
+    if (jsonData == null) return [];
 
     List<dynamic> loans = [];
 
-  for (var u in jsonData) {
-    var res = await http
-        .get("https://helpmepay.rj.r.appspot.com/api/workers/get/${u['worker']}");
-        var dataWorer = json.decode(res.body);
-      final loan = Loan(u["monto"], u["totalcuotas"], u["estado"], u["fechalimite"], u["titulo"], u["descripcion"], dataWorer["imagen"]);
-        //u.fromJson(jsonData);
+    for (var u in jsonData) {
+      var res = await http.get(
+          "https://helpmepay.rj.r.appspot.com/api/workers/get/${u['worker']}");
+      var dataWorer = json.decode(res.body);
+      final loan = Loan(u["monto"], u["totalcuotas"], u["estado"],
+          u["fechalimite"], u["titulo"], u["descripcion"], dataWorer["imagen"]);
+      //u.fromJson(jsonData);
       loans.add(loan);
     }
     print(loans.length);
@@ -48,6 +49,7 @@ class _MyHomePageState extends State<MyDreamHomePage> {
     return new Scaffold(
       drawer: MenuDrawer(),
       appBar: new AppBar(
+        backgroundColor: Colors.blue[700],
         title: new Text("Financia un sueño"),
       ),
       body: Container(
@@ -65,11 +67,12 @@ class _MyHomePageState extends State<MyDreamHomePage> {
                     leading: CircleAvatar(
                       backgroundImage:
                           NetworkImage(snapshot.data[index].worker),
-                    ), 
+                    ),
                     title: Text(snapshot.data[index].titulo),
                     subtitle: Text(snapshot.data[index].descripcion),
                     onTap: () {
-                      Navigator.pushNamed(context, 'detailDream', arguments: snapshot.data[index]);
+                      Navigator.pushNamed(context, 'detailDream',
+                          arguments: snapshot.data[index]);
                       /*Navigator.push(
                           context,
                           new MaterialPageRoute(
@@ -86,4 +89,3 @@ class _MyHomePageState extends State<MyDreamHomePage> {
     );
   }
 }
-

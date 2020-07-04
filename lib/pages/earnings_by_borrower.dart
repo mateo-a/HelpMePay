@@ -25,7 +25,7 @@ class _EarningsByBorrowerState extends State<EarningsByBorrower> {
         .get("http://www.json-generator.com/api/json/get/cezClSFMte?indent=2");
 
     var jsonData = json.decode(response.body);
-    if ( jsonData == null ) return [];
+    if (jsonData == null) return [];
 
     List<User> users = [];
 
@@ -54,6 +54,7 @@ class _EarningsByBorrowerState extends State<EarningsByBorrower> {
     return new Scaffold(
       drawer: MenuDrawer(),
       appBar: new AppBar(
+        backgroundColor: Colors.blue[700],
         title: Text("Ganancias por inversión"),
       ),
       body: Container(

@@ -5,6 +5,7 @@ class TermsService extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[700],
         centerTitle: true,
         title: Text('Terminos y Condiciones'),
       ),

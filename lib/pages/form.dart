@@ -4,7 +4,7 @@ import 'dart:convert';
 //import 'borrower_profile.dart';
 import 'package:flutterapp/pages/drawer_b.dart';
 import 'package:flutterapp/models/loan.dart';
-
+import 'package:flutterapp/providers/loan_provider.dart';
 
 //This class contains the construction parameters of the form screen
 class FormScreen extends StatefulWidget {
@@ -16,15 +16,17 @@ class FormScreen extends StatefulWidget {
 
 class FormScreenState extends State<FormScreen> {
   int _amount;
-  String _phoneNumber;
   String _titulo;
   String _installments;
   String _story;
   bool accepted = false;
-  String expiration = (DateTime.now().add(Duration(days: 30)).toString()); 
+  String expiration = (DateTime.now().add(Duration(days: 30)).toString());
 
-  // This widget creates a new card with the info of a loan 
-  Future<Loan> crearNegocio(String titulo, String fechalimite, String worker, String monto, String descripcion, String totalcuotas) async {
+  LoanProvider newLoan;
+  // This widget creates a new card with the info of a loan
+  /* 
+  Future<Loan> crearNegocio(String titulo, String fechalimite, String worker,
+      String monto, String descripcion, String totalcuotas) async {
     final http.Response response = await http.post(
       'https://helpmepay.rj.r.appspot.com/api/negocios/add',
       headers: <String, String>{
@@ -45,18 +47,19 @@ class FormScreenState extends State<FormScreen> {
       throw Exception('Creación de prestamo fallida');
     }
   }
-
+  */
   final _formKey = GlobalKey<FormState>();
 
-  //textformfield to write the amount for loan 
+  //textformfield to write the amount for loan
   Widget _buildQty() {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: 'Cuánto necesitas'),
-      validator: (String value){
-        if (num.tryParse(value) == null ) {
+      validator: (String value) {
+        if (num.tryParse(value) == null) {
           return 'Ingresa un numero válido';
-        } else if (num.tryParse(value) > 1000000 || num.tryParse(value) < 50000) {
+        } else if (num.tryParse(value) > 1000000 ||
+            num.tryParse(value) < 50000) {
           return 'Cantidad minima: 50000, máximo: 1.000.000';
         }
         return value;
@@ -67,23 +70,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  // this is the constructor of the fromfield to enter phone number 
-  Widget _buildphoneNumber() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Déjanos tu teléfono'),
-      validator: (String value){
-        if (value.isEmpty) {
-          return 'Se requiere un numero de teléfono';
-        }
-        return value;
-      },
-      onChanged: (String value) {
-        _phoneNumber = value;
-        },
-    );
-  }
-
-  // theis is the constructor for the dropdown form list for available dreams 
+  // theis is the constructor for the dropdown form list for available dreams
   Widget _buildDream() {
     return DropdownButton<String>(
       isExpanded: true,
@@ -107,7 +94,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  // constructor for the dropdown to select the number of installments 
+  // constructor for the dropdown to select the number of installments
   Widget _buildInstallments() {
     return DropdownButton<String>(
       isExpanded: true,
@@ -135,9 +122,9 @@ class FormScreenState extends State<FormScreen> {
   Widget _buildStory() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Cuéntanos tu historia'),
-      keyboardType: TextInputType.multiline,      
+      keyboardType: TextInputType.multiline,
       maxLines: null,
-      validator: (String value){
+      validator: (String value) {
         if (value.isEmpty) {
           return 'Deja tu historia para convencer a los inversores';
         }
@@ -148,13 +135,13 @@ class FormScreenState extends State<FormScreen> {
       },
     );
   }
-  
-  // and async widget that builds the 
+
+  // and async widget that builds the
   Future<void> _showMyDialog() async {
     print(_amount);
     return showDialog<void>(
       context: context,
-      barrierDismissible: true, 
+      barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Detalle del Préstamo'),
@@ -170,17 +157,11 @@ class FormScreenState extends State<FormScreen> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text('Cuotas:'),
-                    Text('$_installments')    
-                  ],
+                  children: [Text('Cuotas:'), Text('$_installments')],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text('Objetivo:'),
-                    Text('$_titulo')  
-                  ],
+                  children: [Text('Objetivo:'), Text('$_titulo')],
                 ),
               ],
             ),
@@ -190,7 +171,8 @@ class FormScreenState extends State<FormScreen> {
               child: Text('Aceptar'),
               onPressed: () {
                 _showConfirmation();
-                crearNegocio(_titulo, "81234568", expiration, _amount.toString(), _story, _installments);
+                newLoan.crearNegocio(_amount.toString(), _titulo, "81234568",
+                    expiration, _story, _installments);
               },
             ),
           ],
@@ -199,7 +181,7 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  // this constructior builds the confirmation message after loan details have been confirmed 
+  // this constructior builds the confirmation message after loan details have been confirmed
   Future<void> _showConfirmation() async {
     return showDialog<void>(
       context: context,
@@ -232,45 +214,44 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
-  // the constructor that shows it all together. 
+  // the constructor that shows it all together.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: MenuDrawerB(),
-        appBar: AppBar(title: Text("Llena tus datos")),
+        appBar: AppBar(
+            backgroundColor: Colors.blue[600], title: Text("Llena tus datos")),
         body: Form(
-          key: _formKey,
-          child:Container(
-            child: SingleChildScrollView(
-              child: Form(
+            key: _formKey,
+            child: Container(
+              child: SingleChildScrollView(
+                  child: Form(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buildQty(),
-                    _buildphoneNumber(),
                     SizedBox(height: 16),
                     _buildDream(),
                     SizedBox(height: 16),
                     _buildInstallments(),
                     _buildStory(),
-                    SizedBox(height:20),
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: accepted,
-                          onChanged: (bool value) {
-                            setState(() {
-                              accepted = value; 
-                            });
-                          },
-                        ), 
-                        Container(                          
-                          child: Expanded(
-                            child: Text("Confirmo que he leido y acepto los terminos y condiciones del servicio"), 
-                          ), 
-                        )
-                      ]
-                    ),
+                    SizedBox(height: 20),
+                    Row(children: [
+                      Checkbox(
+                        value: accepted,
+                        onChanged: (bool value) {
+                          setState(() {
+                            accepted = value;
+                          });
+                        },
+                      ),
+                      Container(
+                        child: Expanded(
+                          child: Text(
+                              "Confirmo que he leido y acepto los terminos y condiciones del servicio"),
+                        ),
+                      )
+                    ]),
                     SizedBox(height: 100),
                     RaisedButton(
                       child: Text(
@@ -279,7 +260,7 @@ class FormScreenState extends State<FormScreen> {
                       ),
                       onPressed: () {
                         final form = _formKey.currentState;
-                        if(form.validate()) {
+                        if (form.validate()) {
                           _showMyDialog();
                           form.save();
                         }
@@ -287,11 +268,8 @@ class FormScreenState extends State<FormScreen> {
                     ),
                   ],
                 ),
-              ) 
-            ),
-            margin: EdgeInsets.all(24),
-          )
-        )
-      );
+              )),
+              margin: EdgeInsets.all(24),
+            )));
   }
 }

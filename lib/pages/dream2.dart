@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'drawer.dart';
 
-
 class MyDreamHomePage2 extends StatefulWidget {
   MyDreamHomePage2({Key key, this.title}) : super(key: key);
 
@@ -18,28 +17,27 @@ class MyDreamHomePage2 extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyDreamHomePage2> {
-  
   //Conectarse a la API y cargar datos
   Future<List<Loan>> _getUsers() async {
     var response = await http
         .get("https://helpmepay.rj.r.appspot.com/api/negocios/abiertos/");
 
     var res = json.decode(response.body);
-    
+
     var jsonData = res['data'];
-    
+
     List<Loan> loans = [];
 
     for (var u in jsonData) {
       final loan =
-        //Loan(u["monto"], u["totalcuotas"], u["estado"], u["fechalimite"], u["titulo"], u["descripcion"]);
-        u.fromJson(jsonData);
+          //Loan(u["monto"], u["totalcuotas"], u["estado"], u["fechalimite"], u["titulo"], u["descripcion"]);
+          u.fromJson(jsonData);
       loans.add(loan);
     }
     print(loans.length);
 
     return loans;
-}
+  }
 
   @override
   //Listar sueños
@@ -48,6 +46,7 @@ class _MyHomePageState extends State<MyDreamHomePage2> {
       drawer: MenuDrawer(),
       appBar: new AppBar(
         title: new Text("Financia un sueño"),
+        backgroundColor: Colors.blue[700],
       ),
       body: Container(
         child: FutureBuilder(
@@ -84,4 +83,3 @@ class _MyHomePageState extends State<MyDreamHomePage2> {
     );
   }
 }
-

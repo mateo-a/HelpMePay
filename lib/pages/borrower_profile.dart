@@ -14,6 +14,7 @@ class BorrowerScreen extends StatelessWidget {
     return Scaffold(
       drawer: MenuDrawerB(),
       appBar: AppBar(
+        backgroundColor: Colors.blue[700],
         title: Text("Member Profile"),
       ),
       body: Padding(
@@ -22,7 +23,7 @@ class BorrowerScreen extends StatelessWidget {
           children: [
             Container(
               color: Colors.blue,
-              height: 400, 
+              height: 400,
               child: Icon(
                 Icons.person,
                 size: 96,
@@ -45,8 +46,7 @@ class BorrowerScreen extends StatelessWidget {
               ),
             ),
             Center(
-              child:
-              RaisedButton(
+              child: RaisedButton(
                 child: Text('Make a Payment'),
                 onPressed: () {},
               ),

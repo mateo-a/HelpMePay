@@ -24,4 +24,27 @@ class LoanProvider {
       return false;
     }
   }
+
+  Future<Loan> crearNegocio(String titulo, String fechalimite, String worker,
+      String monto, String descripcion, String totalcuotas) async {
+    final http.Response response = await http.post(
+      'https://helpmepay.rj.r.appspot.com/api/negocios/add',
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'titulo': titulo,
+        'fechalimite': fechalimite,
+        'worker': worker,
+        'monto': monto,
+        'descripcion': descripcion,
+        'totalcuotas': totalcuotas
+      }),
+    );
+    if (response.statusCode == 201) {
+      return Loan.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Creación de prestamo fallida');
+    }
+  }
 }
