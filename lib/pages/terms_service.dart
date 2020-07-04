@@ -47,6 +47,6 @@ class TermsService extends StatelessWidget {
         ],
       ),
     );
-    throw UnimplementedError();
+   // throw UnimplementedError();
   }
 }
