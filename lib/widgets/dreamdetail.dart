@@ -8,9 +8,9 @@ class DetailPage extends StatelessWidget {
 //Detalle de sueño/historia
   @override
   Widget build(BuildContext context) {
-  final Loan loan = ModalRoute.of(context).settings.arguments;
+    final Loan loan = ModalRoute.of(context).settings.arguments;
 
-  //DetailPage(this.loan);
+    //DetailPage(this.loan);
 
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +22,7 @@ class DetailPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             child: CircleAvatar(
-              radius: 50.0,
+              radius: 80.0,
               backgroundImage: NetworkImage(loan.worker),
             ),
           ),
@@ -55,7 +55,7 @@ class DetailPage extends StatelessWidget {
               children: <Widget>[
                 FlatButton(
                   child: Text('Expira pronto'),
-                  onPressed: (){},
+                  onPressed: () {},
                 ),
                 RaisedButton(
                   color: Colors.blueAccent,
