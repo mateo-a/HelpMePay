@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/pages/add_funds.dart';
 import 'package:flutterapp/pages/earnings_by_borrower.dart';
 
 import 'package:flutterapp/pages/login.dart';
@@ -20,6 +21,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
         'login'               : ( BuildContext context ) => Login(),
         'registro'            : ( BuildContext context ) => Registro(),
         'dream'               : ( BuildContext context ) => MyDreamHomePage(),
+        'funds'               : ( BuildContext context ) => FundsSlider(),
         'sliderDream'         : ( BuildContext context ) => MoneySlider(),
         'detailDream'         : ( BuildContext context ) => DetailPage(),
         'borrower'            : ( BuildContext context ) => BorrowerScreen(),

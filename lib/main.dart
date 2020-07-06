@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
       title: 'HelpMePay',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'borrower',
+      initialRoute: 'dream',
       // initialRoute: prefs.ultimaPagina,
       routes: getApplicationRoutes(),
       onGenerateRoute: ( RouteSettings settings ) {
