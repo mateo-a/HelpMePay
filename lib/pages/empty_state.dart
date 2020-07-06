@@ -8,7 +8,7 @@ class EmptyState extends StatelessWidget {
     return Scaffold(
         drawer: MenuDrawerB(),
         appBar: AppBar(
-          backgroundColor: Colors.blue[600],
+          backgroundColor: Colors.blue[700],
           title: Text('Solicita un prestamo'),
         ),
         body: Container(
@@ -22,12 +22,13 @@ class EmptyState extends StatelessWidget {
                   'tu sueño. Completa el formulario para '
                   'solicitar tu prestamo',
                   textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
               SizedBox(height: 50),
               Container(
                 child: RaisedButton(
-                  color: Colors.blue[700],
+                  color: Colors.green[500],
                   onPressed: () {
                     Navigator.pushNamed(context, 'formScreen');
                     /*Navigator.push(
