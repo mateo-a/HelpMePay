@@ -26,7 +26,7 @@ class _MoneySliderState extends State<MoneySlider> {
               child: new ListBody(
                 children: [
                   new Text(
-                      'Acabas de aportar \u0024$sliderValue para ayudar a este worker.\n\nPuedes seguir ayudando a otros Workers.'),
+                      'Acabas de aportar \u0024${sliderValue.toInt()} para ayudar a este worker.\n\nPuedes seguir ayudando a otros Workers.'),
                 ],
               ),
             ),
