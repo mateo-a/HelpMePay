@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/models/loan_model.dart';
 import 'package:flutterapp/pages/drawer_b.dart';
 import 'package:flutterapp/blocs/provider.dart';
+import 'package:intl/intl.dart';
 
 //This class contains the construction parameters of the form screen
 class FormScreen extends StatefulWidget {
@@ -18,7 +19,9 @@ class FormScreenState extends State<FormScreen> {
   String _installments;
   String _story;
   bool accepted = false;
-  String expiration = (DateTime.now().add(Duration(days: 30)).toString());
+  String expiration = DateFormat('dd-MM-yyyy')
+      .format(DateTime.now().add(Duration(days: 30)))
+      .toString();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -143,8 +146,8 @@ class FormScreenState extends State<FormScreen> {
               child: Text('Aceptar'),
               onPressed: () {
                 _showConfirmation();
-                _crearNegocio(_amount, _titulo, "10002",
-                    expiration, _story, _installments);
+                _crearNegocio(_amount, _titulo, "10002", expiration, _story,
+                    _installments);
               },
             ),
           ],
@@ -156,20 +159,20 @@ class FormScreenState extends State<FormScreen> {
 /* 
 * Function that creates a new loan for the worker
 */
-  _crearNegocio(int monto, String titulo, String idworker,
-    String fechalimite, String descripcion, String totalcuotas) {
-      final totcuota = int.parse(totalcuotas);
-      final LoanModel loan = new LoanModel();
-      
-      loan.descripcion  = descripcion;
-      loan.fechalimite  = fechalimite;
-      loan.monto        = monto;
-      loan.titulo       = titulo;
-      loan.totalcuotas  = totcuota;
-      loan.worker       = idworker;
+  _crearNegocio(int monto, String titulo, String idworker, String fechalimite,
+      String descripcion, String totalcuotas) {
+    final totcuota = int.parse(totalcuotas);
+    final LoanModel loan = new LoanModel();
 
-      loanBloc.crearLoan(loan);
-    }
+    loan.descripcion = descripcion;
+    loan.fechalimite = fechalimite;
+    loan.monto = monto;
+    loan.titulo = titulo;
+    loan.totalcuotas = totcuota;
+    loan.worker = idworker;
+
+    loanBloc.crearLoan(loan);
+  }
 
   // this constructior builds the confirmation message after loan details have been confirmed
   Future<void> _showConfirmation() async {
@@ -207,13 +210,11 @@ class FormScreenState extends State<FormScreen> {
   // the constructor that shows it all together.
   @override
   Widget build(BuildContext context) {
-    
     loanBloc = Provider.loanBloc(context);
 
     return Scaffold(
-        drawer: MenuDrawerB(),
         appBar: AppBar(
-            backgroundColor: Colors.blue[600], title: Text("Llena tus datos")),
+            backgroundColor: Colors.blue[700], title: Text("Llena tus datos")),
         body: Form(
             key: _formKey,
             child: Container(
