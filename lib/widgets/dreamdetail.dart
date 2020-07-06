@@ -10,10 +10,11 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
   final LoanModel loan = ModalRoute.of(context).settings.arguments;
 
-  //DetailPage(this.loan);
+    //DetailPage(this.loan);
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[700],
         title: Text(loan.titulo),
       ),
       body: SafeArea(
@@ -22,7 +23,7 @@ class DetailPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             child: CircleAvatar(
-              radius: 50.0,
+              radius: 80.0,
               backgroundImage: NetworkImage(loan.worker),
             ),
           ),
@@ -49,24 +50,17 @@ class DetailPage extends StatelessWidget {
             ),
           ),
           Container(
-            child: ButtonBar(
-              alignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                FlatButton(
-                  child: Text('Expira pronto'),
-                  onPressed: (){},
-                ),
-                RaisedButton(
-                  color: Colors.blueAccent,
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'sliderDream');
-                    /*Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MoneySlider()));*/
-                  },
-                  child: Text('Ayudalo!'),
-                ),
-              ],
+            child: RaisedButton(
+              color: Colors.blueAccent,
+              onPressed: () {
+                Navigator.pushNamed(context, 'sliderDream');
+              },
+              child: Text('Expira pronto. Ayudalo!',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  )),
             ),
           )
         ],

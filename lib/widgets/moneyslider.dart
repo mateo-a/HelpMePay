@@ -26,7 +26,7 @@ class _MoneySliderState extends State<MoneySlider> {
               child: new ListBody(
                 children: [
                   new Text(
-                      'Acabas de aportar \u0024$sliderValue para ayudar a este worker.\n\nPuedes seguir ayudando a otros Workers.'),
+                      'Acabas de aportar \u0024${sliderValue.toInt()} para ayudar a este worker.\n\nPuedes seguir ayudando a otros Workers.'),
                 ],
               ),
             ),
@@ -51,6 +51,7 @@ class _MoneySliderState extends State<MoneySlider> {
 
     return new Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[700],
         title: Text("Financia a este worker"),
       ),
       drawer: MenuDrawer(),
@@ -81,7 +82,7 @@ class _MoneySliderState extends State<MoneySlider> {
                   shadowColor: Color(0x802196F3),
                   child: Container(
                       width: 350.0,
-                      height: 200.0,
+                      height: 280.0,
                       child: Column(
                         children: <Widget>[
                           Padding(
@@ -106,10 +107,21 @@ class _MoneySliderState extends State<MoneySlider> {
                             padding: const EdgeInsets.all(16.0),
                             child: Container(
                                 child: Text(
-                              "Tu contribución : \u0024$sliderValue",
+                              "💵 Tu contribución",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 22.0,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                                child: Text(
+                              "\u0024${sliderValue.toInt()}",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30.0,
                                   fontWeight: FontWeight.bold),
                             )),
                           ),
@@ -124,7 +136,8 @@ class _MoneySliderState extends State<MoneySlider> {
                                         new BorderRadius.circular(30.0)),
                                 color: Colors.blue,
                                 child: Text('Confirmar',
-                                    style: TextStyle(color: Colors.white)),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 22)),
                                 onPressed: _showcontent,
                               ),
                             )),

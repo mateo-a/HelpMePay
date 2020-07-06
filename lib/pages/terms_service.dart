@@ -40,13 +40,13 @@ class TermsService extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(14),
             child: RaisedButton(
-              onPressed: () {},
+              onPressed: () => {Navigator.pushNamed(context, 'dream')},
               child: const Text('Lo entiendo y deseo continuar'),
             ),
           ),
         ],
       ),
     );
-   // throw UnimplementedError();
+    // throw UnimplementedError();
   }
 }
