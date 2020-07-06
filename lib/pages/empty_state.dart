@@ -16,6 +16,11 @@ class EmptyState extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.network(
+                  'https://icons.iconarchive.com/icons/inipagi/business-economic/256/rocket-icon.png',
+                  width: 150,
+                  height: 150),
+              SizedBox(height: 25),
               Center(
                 child: Text(
                   'Estas a unos pasos de completar '
@@ -25,7 +30,7 @@ class EmptyState extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 25),
               Container(
                 child: RaisedButton(
                   color: Colors.green[500],
