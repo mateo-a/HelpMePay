@@ -95,12 +95,15 @@ class EarningScreen extends StatelessWidget {
                 child: Column(
               children: <Widget>[
                 Container(
-                    color: Colors.blue,
-                    height: 400,
-                    margin: EdgeInsets.only(left: 2, right: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.blue[700],
+                    ),
+                    height: 200,
+                    margin: EdgeInsets.all(20),
                     child: Center(
                       child: Text(
-                        "500000",
+                        "\u0024500000",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 50, color: Colors.white),
                       ),
