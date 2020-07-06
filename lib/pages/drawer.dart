@@ -19,7 +19,7 @@ class MenuDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.people),
+              leading: Icon(Icons.add_box),
               title: Text('Agrega Fondos a tu Cuenta'),
               onTap: () {
                 Navigator.pushNamed(context, 'funds');
