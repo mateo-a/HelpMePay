@@ -30,9 +30,7 @@ class _AccountState extends State<Account> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(50.0))),
         child: Container(
-            decoration: BoxDecoration(
-                gradient: RadialGradient(
-                    colors: [Color(0xFF015FFF), Color(0xFF015FFF)])),
+            color: Colors.blue[700],
             padding: EdgeInsets.all(5.0),
             // color: Color(0xFF015FFF),
             child: Column(
@@ -48,26 +46,24 @@ class _AccountState extends State<Account> {
                       ), 
                       onPressed: () {},
                     ), */
-                    Text("Historial de Pagos",
-                        style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                    /* IconButton(
-                      icon: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {},
-                    ) */
                   ],
                 ),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: Text('Saldo Pendiente \u0024 550.000',
+                    child: Text('Saldo Pendiente',
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 24.0)),
+                        style: TextStyle(color: Colors.white, fontSize: 20.0)),
                   ),
                 ),
-                SizedBox(height: 35.0),
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Text('\u0024550.000',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 30.0)),
+                  ),
+                ),
               ],
             )),
       );
@@ -78,10 +74,11 @@ class _AccountState extends State<Account> {
       child: Scaffold(
         drawer: MenuDrawerB(),
         appBar: AppBar(
+          title: Text("Historial de pagos"),
           iconTheme: IconThemeData(
             color: Colors.white, //change your color here
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.blue[700],
           elevation: 0.0,
 //          title: Text(
 //            "Historial de Pagos",
@@ -109,7 +106,7 @@ class _AccountState extends State<Account> {
                   child: Icon(
                     Icons.refresh,
                     size: 35.0,
-                    color: Color(0xFF015FFF),
+                    color: Colors.blue[700],
                   ),
                 ),
                 displayAccoutList(),
@@ -130,10 +127,11 @@ class _AccountState extends State<Account> {
                       EdgeInsets.symmetric(vertical: 12.0, horizontal: 28.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
-                  color: Color(0xFF015FFF),
+                  color: Colors.green[500],
                   //borderSide: BorderSide(color: Color(0xFF015FFF), width: 1.0),
                   onPressed: () {},
-                  child: Text("Realizar un Pago"),
+                  child: Text("Realizar un Pago",
+                      style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
