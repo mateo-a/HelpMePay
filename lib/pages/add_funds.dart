@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/blocs/investor_bloc.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/models/cargarcapital_model.dart';
 
 import 'package:flutterapp/pages/drawer.dart';
 
@@ -9,10 +12,20 @@ class FundsSlider extends StatefulWidget {
 }
 
 class _FundsSliderState extends State<FundsSlider> {
+  InvestorBloc investorBloc;
   var sliderValue = 0.0;
 
   @override
   Widget build(BuildContext context) {
+    investorBloc = Provider.investorBloc(context);
+    _cargarCapital(BuildContext context, InvestorBloc investorBloc){
+      final AgregarCapital agregar = new AgregarCapital();
+
+      agregar.id      = "20007";              // ID del inversionista
+      agregar.capital =  sliderValue.toInt();
+
+      investorBloc.agregarCapital(agregar);
+    }
     void _showcontent() {
       showDialog(
         context: context, barrierDismissible: false, // user must tap button!
@@ -32,6 +45,7 @@ class _FundsSliderState extends State<FundsSlider> {
               new FlatButton(
                 child: new Text('Continuar'),
                 onPressed: () {
+                  _cargarCapital(context, investorBloc);
                   Navigator.pushNamed(context, 'dream');
                 },
               ),
