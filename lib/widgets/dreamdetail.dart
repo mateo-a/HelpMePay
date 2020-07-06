@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/loan.dart';
+import 'package:flutterapp/models/loan_model.dart';
 //import '../models/loan.dart';
 //import 'moneyslider.dart';
 
@@ -8,7 +8,7 @@ class DetailPage extends StatelessWidget {
 //Detalle de sueño/historia
   @override
   Widget build(BuildContext context) {
-  final Loan loan = ModalRoute.of(context).settings.arguments;
+  final LoanModel loan = ModalRoute.of(context).settings.arguments;
 
   //DetailPage(this.loan);
 
