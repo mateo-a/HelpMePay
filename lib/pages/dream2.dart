@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/loan.dart';
+import 'package:flutterapp/models/loan_model.dart';
 //import 'package:flutterapp/widgets/dreamdetail.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
@@ -18,7 +18,7 @@ class MyDreamHomePage2 extends StatefulWidget {
 
 class _MyHomePageState extends State<MyDreamHomePage2> {
   //Conectarse a la API y cargar datos
-  Future<List<Loan>> _getUsers() async {
+  Future<List<LoanModel>> _getUsers() async {
     var response = await http
         .get("https://helpmepay.rj.r.appspot.com/api/negocios/abiertos/");
 
@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyDreamHomePage2> {
 
     var jsonData = res['data'];
 
-    List<Loan> loans = [];
+    List<LoanModel> loans = [];
 
     for (var u in jsonData) {
       final loan =

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-//import 'package:http/http.dart' as http;
-//import 'dart:convert';
-//import 'borrower_profile.dart';
+import 'package:flutterapp/models/loan_model.dart';
 import 'package:flutterapp/pages/drawer_b.dart';
-//import 'package:flutterapp/models/loan.dart';
-import 'package:flutterapp/providers/loan_provider.dart';
+import 'package:flutterapp/blocs/provider.dart';
 
 //This class contains the construction parameters of the form screen
 class FormScreen extends StatefulWidget {
@@ -15,6 +12,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
+  LoanBloc loanBloc;
   int _amount;
   String _titulo;
   String _installments;
@@ -22,32 +20,6 @@ class FormScreenState extends State<FormScreen> {
   bool accepted = false;
   String expiration = (DateTime.now().add(Duration(days: 30)).toString());
 
-  LoanProvider newLoan;
-  // This widget creates a new card with the info of a loan
-  /* 
-  Future<Loan> crearNegocio(String titulo, String fechalimite, String worker,
-      String monto, String descripcion, String totalcuotas) async {
-    final http.Response response = await http.post(
-      'https://helpmepay.rj.r.appspot.com/api/negocios/add',
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'titulo': titulo,
-        'fechalimite': fechalimite,
-        'worker': worker,
-        'monto': monto,
-        'descripcion': descripcion,
-        'totalcuotas': totalcuotas
-      }),
-    );
-    if (response.statusCode == 201) {
-      return Loan.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Creación de prestamo fallida');
-    }
-  }
-  */
   final _formKey = GlobalKey<FormState>();
 
   //textformfield to write the amount for loan
@@ -171,7 +143,7 @@ class FormScreenState extends State<FormScreen> {
               child: Text('Aceptar'),
               onPressed: () {
                 _showConfirmation();
-                newLoan.crearNegocio(_amount.toString(), _titulo, "81234568",
+                _crearNegocio(_amount, _titulo, "10002",
                     expiration, _story, _installments);
               },
             ),
@@ -180,6 +152,24 @@ class FormScreenState extends State<FormScreen> {
       },
     );
   }
+
+/* 
+* Function that creates a new loan for the worker
+*/
+  _crearNegocio(int monto, String titulo, String idworker,
+    String fechalimite, String descripcion, String totalcuotas) {
+      final totcuota = int.parse(totalcuotas);
+      final LoanModel loan = new LoanModel();
+      
+      loan.descripcion  = descripcion;
+      loan.fechalimite  = fechalimite;
+      loan.monto        = monto;
+      loan.titulo       = titulo;
+      loan.totalcuotas  = totcuota;
+      loan.worker       = idworker;
+
+      loanBloc.crearLoan(loan);
+    }
 
   // this constructior builds the confirmation message after loan details have been confirmed
   Future<void> _showConfirmation() async {
@@ -217,6 +207,9 @@ class FormScreenState extends State<FormScreen> {
   // the constructor that shows it all together.
   @override
   Widget build(BuildContext context) {
+    
+    loanBloc = Provider.loanBloc(context);
+
     return Scaffold(
         drawer: MenuDrawerB(),
         appBar: AppBar(

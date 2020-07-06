@@ -1,10 +1,9 @@
 import "package:flutter/material.dart";
 
 import 'package:flutterapp/models/worker_model.dart';
-import 'package:flutterapp/providers/workers_provider.dart';
 import 'package:flutterapp/models/investor_model.dart';
-import 'package:flutterapp/providers/investors_provider.dart';
 import 'package:flutterapp/blocs/provider.dart';
+
 import 'package:flutterapp/providers/usuario_provider.dart';
 import 'package:flutterapp/utils/utils.dart';
 
@@ -12,26 +11,27 @@ import 'package:flutterapp/utils/utils.dart';
 
 class Registro extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
-  final workerProvider = new WorkersProvider();
-  final investorProvider = new InvestorsProvider();
 
   final WorkerModel worker = new WorkerModel();
   final InvestorModel investor = new InvestorModel();
 
+
   @override
   Widget build(BuildContext context) {
+    final workersBloc  = Provider.workersBloc(context);
+    final investorBloc = Provider.investorBloc(context);
+    
     return Scaffold(
       body: Stack(
         children: [
           _crearFondo(context),
-          _loginForm(context),
+          _loginForm(context, workersBloc, investorBloc),
         ],
       ),
     );
-    //throw UnimplementedError();
   }
 
-  Widget _loginForm(BuildContext context){
+  Widget _loginForm(BuildContext context, WorkersBloc workersBloc, InvestorBloc investorBloc ){
     final bloc = Provider.of(context);
     final size = MediaQuery.of(context).size;
 
@@ -76,11 +76,11 @@ class Registro extends StatelessWidget {
                 Text ('Registrate como:', style: TextStyle(fontSize: 15.0),),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   SizedBox(),
-                  _crearBotonWorker( bloc ),
+                  _crearBotonWorker( bloc, workersBloc ),
                   SizedBox(width: 20.0),
                   Text ('Ó', style: TextStyle(fontSize: 15.0)),
                   SizedBox(width: 20.0),
-                  _crearBotonInvestor( bloc ),
+                  _crearBotonInvestor( bloc, investorBloc ),
                   SizedBox(),
                 ],
                 ),
@@ -114,7 +114,7 @@ class Registro extends StatelessWidget {
     );
   }
 
-  _registerInvestor(BuildContext context, LoginBloc bloc) async {
+  _registerInvestor(BuildContext context, LoginBloc bloc, InvestorBloc investorBloc) async {
     final info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
     if ( info['ok'] ) {
       investor.id       = '${info['localId']}';
@@ -122,14 +122,14 @@ class Registro extends StatelessWidget {
       investor.apellido = '${bloc.apellido}';
       investor.cedula   = '${bloc.cedula}';
       // worker.imagen  = '${bloc.imagen}';
-      // Navigator.pushReplacementNamed(context, 'borrower');
-      investorProvider.crearInvestor(investor);
+      Navigator.pushReplacementNamed(context, 'dream');
+      investorBloc.agregarInvestor(investor);
     } else {
       mostrarAlerta( context, info['message']);
     }
   }
   
-  _registerWorker(BuildContext context, LoginBloc bloc) async {
+  _registerWorker(BuildContext context, LoginBloc bloc, WorkersBloc workersBloc) async {
     final info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
     if ( info['ok'] ) {
       worker.id       = '${info['localId']}';
@@ -137,14 +137,14 @@ class Registro extends StatelessWidget {
       worker.apellido = '${bloc.apellido}';
       worker.cedula   = '${bloc.cedula}';
       // worker.imagen  = '${bloc.imagen}';
-      // Navigator.pushReplacementNamed(context, 'borrower');
-      workerProvider.crearWorker(worker);
+      Navigator.pushReplacementNamed(context, 'borrower');
+      workersBloc.agregarWorker(worker);
     } else {
       mostrarAlerta( context, info['message']);
     }
   }
 
-    Widget _crearBotonInvestor( LoginBloc bloc ){
+    Widget _crearBotonInvestor( LoginBloc bloc, InvestorBloc investorBloc ){
     // formValidStream
     // snapshot.hasData
     // true ? algo si true : algo si false
@@ -162,13 +162,13 @@ class Registro extends StatelessWidget {
           elevation: 0.0,
           color: Colors.blue[900],
           textColor: Colors.white,
-          onPressed: snapshot.hasData ? ()=> _registerInvestor( context, bloc ) : null
+          onPressed: snapshot.hasData ? ()=> _registerInvestor( context, bloc, investorBloc ) : null
         );
       },
     );
   }
 
-  Widget _crearBotonWorker( LoginBloc bloc ){
+  Widget _crearBotonWorker( LoginBloc bloc, WorkersBloc workersBloc ){
     // formValidStream
     // snapshot.hasData
     // true ? algo si true : algo si false
@@ -186,7 +186,7 @@ class Registro extends StatelessWidget {
           elevation: 0.0,
           color: Colors.blue[900],
           textColor: Colors.white,
-          onPressed: snapshot.hasData ? ()=> _registerWorker( context, bloc ) : null
+          onPressed: snapshot.hasData ? ()=> _registerWorker( context, bloc, workersBloc ) : null
         );
       },
     );

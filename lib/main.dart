@@ -15,19 +15,18 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  final prefs = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
-
-      final prefs = new PreferenciasUsuario();
-      print( prefs.token );
+      //print( prefs.token );
       print('============================');
       print( prefs.localid );
-
     return Provider(
       child: MaterialApp(
       title: 'HelpMePay',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
+      initialRoute: 'borrower',
+      // initialRoute: prefs.ultimaPagina,
       routes: getApplicationRoutes(),
       onGenerateRoute: ( RouteSettings settings ) {
 

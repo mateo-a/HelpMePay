@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'drawer_b.dart';
+// import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 //import 'models/user.dart';
 
 class BorrowerScreen extends StatelessWidget {
@@ -8,9 +9,14 @@ class BorrowerScreen extends StatelessWidget {
   // const BorrowerScreen({Key key, @required this.user})
   //     : assert(user != null),
   //       super(key: key);
+  
+  // final prefs = new PreferenciasUsuario(); // Preferencias de usuario
 
   @override
   Widget build(BuildContext context) {
+
+    // prefs.ultimaPagina = 'borrower'; // Guardar ultima pagina visitada
+
     return Scaffold(
       drawer: MenuDrawerB(),
       appBar: AppBar(

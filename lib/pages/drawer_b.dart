@@ -15,14 +15,15 @@ class MenuDrawerB extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
                 child: UserAccountsDrawerHeader(
-                accountName: Text('Lenora Rodriguez'),
-                accountEmail: Text('Lenora@gmail.com'),
+                accountName: Text('Victor Rodriguez'),
+                accountEmail: Text('Victor@gmail.com'),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Icon(Icons.people),
                 ),
               ),
               onTap: (){
+                // Navigator.pushReplacementNamed(context, 'borrower');
                 Navigator.pushNamed(context, 'borrower');
                /* Navigator.push(context,
                     MaterialPageRoute(builder: (context) => BorrowerScreen()),); */
@@ -74,7 +75,7 @@ class MenuDrawerB extends StatelessWidget {
               leading: Icon(Icons.home),
               title: Text('Home'),
               onTap: () {
-                Navigator.pushNamed(context, 'NewUser');
+                Navigator.pushNamed(context, 'login');
               /*  Navigator.push(context, 
                 MaterialPageRoute(builder: (context) => TermsService())); */
               },

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:flutterapp/pages/drawer.dart';
-import 'package:flutterapp/models/loan.dart';
+import 'package:flutterapp/models/loan_model.dart';
 // import 'package:flutterapp/widgets/dreamdetail.dart';
 
 //Page that loads all available dreams
@@ -34,10 +34,10 @@ class _MyHomePageState extends State<MyDreamHomePage> {
       var res = await http.get(
           "https://helpmepay.rj.r.appspot.com/api/workers/get/${u['worker']}");
       var dataWorer = json.decode(res.body);
-      final loan = Loan(u["monto"], u["totalcuotas"], u["estado"],
-          u["fechalimite"], u["titulo"], u["descripcion"], dataWorer["imagen"]);
-      //u.fromJson(jsonData);
-      loans.add(loan);
+      // final loan = LoanModel(u["monto"], u["totalcuotas"], u["estado"],
+      //     u["fechalimite"], u["titulo"], u["descripcion"], dataWorer["imagen"]);
+      // //u.fromJson(jsonData);
+      // loans.add(loan);
     }
     print(loans.length);
     return loans;
