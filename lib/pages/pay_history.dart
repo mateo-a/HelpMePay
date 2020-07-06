@@ -32,21 +32,11 @@ class _AccountState extends State<Account> {
         child: Container(
             color: Colors.blue[700],
             padding: EdgeInsets.all(5.0),
-            // color: Color(0xFF015FFF),
             child: Column(
               children: <Widget>[
                 Row(
-                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    /*IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      ), 
-                      onPressed: () {},
-                    ), */
-                  ],
+                  children: <Widget>[],
                 ),
                 Center(
                   child: Padding(
@@ -80,11 +70,6 @@ class _AccountState extends State<Account> {
           ),
           backgroundColor: Colors.blue[700],
           elevation: 0.0,
-//          title: Text(
-//            "Historial de Pagos",
-//            style: TextStyle(color: Colors.black),
-//          ),
-//          centerTitle: true,
           actions: <Widget>[
             IconButton(
               icon: Icon(

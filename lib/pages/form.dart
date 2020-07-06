@@ -58,8 +58,13 @@ class FormScreenState extends State<FormScreen> {
           _titulo = newValue;
         });
       },
-      items: <String>['Moto', 'Carro', 'Licencia', 'Pase']
-          .map<DropdownMenuItem<String>>((String value) {
+      items: <String>[
+        '🛵 Moto',
+        '🚲 Bicicleta',
+        '💳 Licencia',
+        '🔒 Seguro',
+        '🎒 Equipamiento'
+      ].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -82,7 +87,7 @@ class FormScreenState extends State<FormScreen> {
           _installments = newValue;
         });
       },
-      items: <String>['12', '24', '36'] // installments available
+      items: <String>['6', '12', '24', '36'] // installments available
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
