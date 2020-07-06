@@ -252,9 +252,10 @@ class FormScreenState extends State<FormScreen> {
                     ]),
                     SizedBox(height: 100),
                     RaisedButton(
+                      color: Colors.green[500],
                       child: Text(
-                        'Submit',
-                        style: TextStyle(color: Colors.blue, fontSize: 16),
+                        'Enviar',
+                        style: TextStyle(color: Colors.white, fontSize: 24),
                       ),
                       onPressed: () {
                         final form = _formKey.currentState;
