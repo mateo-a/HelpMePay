@@ -110,15 +110,15 @@ class EarningScreen extends StatelessWidget {
                     )),
                 ListTile(
                   leading: Icon(Icons.person),
-                  title: Text('Nuevo Pago'),
+                  title: Text('Nuevo Préstamo'),
                   subtitle: Text(
-                      'Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                      'Realizaste un prestamo a Carlos A, Próximo pago en aproximadamente 5 dias'),
                 ),
                 ListTile(
                   leading: Icon(Icons.person),
-                  title: Text('Nuevo Pago'),
+                  title: Text('Nuevo Préstamo'),
                   subtitle: Text(
-                      'Borrower realizo un pago, Recibes 10% del total mas 5% de intereses'),
+                      'Realizaste un prestamo a Ramiro B. Proximo pago en aproximadamente 20 días'),
                 ),
               ],
             )),
