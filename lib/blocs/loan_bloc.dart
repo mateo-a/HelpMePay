@@ -34,8 +34,8 @@ class LoanBloc {
     _cargandoController.sink.add(false);
   }
 
-  void negociosAbiertosWorker() async {
-    final negociosAbiertos = await _loanProvider.negociosAbiertosWorker();
+  void negociosAbiertos() async {
+    final negociosAbiertos = await _loanProvider.negociosAbiertos();
     _negociosAbiertosController.sink.add( negociosAbiertos );
   }
 

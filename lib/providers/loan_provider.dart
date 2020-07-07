@@ -35,7 +35,7 @@ class LoanProvider {
     }
   }
 
-  Future<List<NegociosAbiertosModel>> negociosAbiertosWorker() async {
+  Future<List<NegociosAbiertosModel>> negociosAbiertos() async {
     final url  = '$_url/abiertos';
     final resp = await http.get(url);
     
