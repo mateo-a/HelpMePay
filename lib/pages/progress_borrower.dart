@@ -13,78 +13,103 @@ class _ProgressBorrowerState extends State<ProgressBorrower> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MenuDrawerB(),
-      appBar: AppBar(
-        backgroundColor: Colors.blue[700],
-        title: Text("Recaudo de fondos"),
-      ),
-      body: Center(
-        child: ListView(
-          children: <Widget>[
-            CircularPercentIndicator(
-              header: Text(
-                "\n45\nDías restantes",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
-              ),
-              radius: 130.0,
-              lineWidth: 13.0,
-              animation: true,
-              percent: 0.7,
-              animateFromLastPercent: true,
-              center: Text(
-                "\u0024 476000",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-              ),
-              footer: Text(
-                "Te faltan \u0024 24000 para completar tu meta",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
-              ),
-              circularStrokeCap: CircularStrokeCap.round,
-              progressColor: Colors.deepOrange,
-            ),
-            Container(
-              height: 50,
-              child: Card(
-                color: Colors.blueGrey[50],
-                child: const Center(
-                  child: Text(
-                    "Un inversor ha contribuido con \u0024 50000, Hurra!",
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 50,
-              child: Card(
-                color: Colors.blueGrey[50],
-                child: const Center(
-                  child: Text(
-                    "Un inversor ha contribuido con \u0024 150000, Hurra!",
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 50,
-              child: Card(
-                color: Colors.blueGrey[50],
-                child: const Center(
-                  child: Text(
-                    "Un inversor ha contribuido con \u0024 50000, Hurra!",
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontSize: 15.0),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        drawer: MenuDrawerB(),
+        appBar: AppBar(
+          backgroundColor: Colors.blue[700],
+          title: Text("Recaudo de fondos"),
         ),
-      ),
-    );
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "\n🤝\n25\nPatrocinadores",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 23.0),
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "\n📅\n45\nDías restantes",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 23.0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: LinearPercentIndicator(
+                  lineHeight: 24.0,
+                  width: 320.0,
+                  animation: true,
+                  trailing: new Text(" 🤑", style: TextStyle(fontSize: 32)),
+                  percent: 0.7,
+                  animateFromLastPercent: true,
+                  center: Text(
+                    "\u0024476000",
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                  progressColor: Colors.green[500],
+                  backgroundColor: Colors.greenAccent[100],
+                ),
+              ),
+              Center(
+                child: Text("Meta: \u0024500000"),
+              ),
+              SizedBox(height: 15),
+              Container(
+                height: 50,
+                child: Card(
+                  color: Colors.blueGrey[50],
+                  child: const Center(
+                    child: Text(
+                      "Un  inversor ha contribuido con \u0024 50000, Hurra!",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 50,
+                child: Card(
+                  color: Colors.blueGrey[50],
+                  child: const Center(
+                    child: Text(
+                      "Un inversor ha contribuido con \u0024 150000, Hurra!",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                height: 50,
+                child: Card(
+                  color: Colors.blueGrey[50],
+                  child: const Center(
+                    child: Text(
+                      "Un inversor ha contribuido con \u0024 50000, Hurra!",
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(fontSize: 15.0),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
