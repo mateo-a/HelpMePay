@@ -1,29 +1,17 @@
 //import 'package:banking_app_account_ui/app_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/models/pago_model.dart';
 import 'package:flutterapp/pages/drawer_b.dart';
 
-//void main() => runApp(MyApp());
-
-class PayHistory extends StatelessWidget {
+class PayHistory extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      //debugShowCheckedModeBanner: false,
-      //title: 'Historial de Pagos',
-      //theme: ThemeData(
-      //  primarySwatch: Colors.blue,
-      //),
-      body: Account(),
-    );
-  }
+  _PayHistoryState createState() => _PayHistoryState();
 }
 
-class Account extends StatefulWidget {
-  @override
-  _AccountState createState() => _AccountState();
-}
+class _PayHistoryState extends State<PayHistory> {
+  LoanBloc loanBloc;
 
-class _AccountState extends State<Account> {
   Card topArea() => Card(
         margin: EdgeInsets.all(10.0),
         elevation: 1.0,
@@ -60,6 +48,7 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
+    loanBloc = Provider.loanBloc(context);
     return SafeArea(
       child: Scaffold(
         drawer: MenuDrawerB(),
@@ -114,7 +103,7 @@ class _AccountState extends State<Account> {
                       borderRadius: BorderRadius.circular(20.0)),
                   color: Colors.green[500],
                   //borderSide: BorderSide(color: Color(0xFF015FFF), width: 1.0),
-                  onPressed: () {},
+                  onPressed: () {_realizarPago(context, loanBloc);},
                   child: Text("Realizar un Pago",
                       style: TextStyle(color: Colors.white)),
                 ),
@@ -124,6 +113,15 @@ class _AccountState extends State<Account> {
         ),
       ),
     );
+  }
+
+  _realizarPago(BuildContext context, LoanBloc loanBloc) {
+    final PagoModel pago = new PagoModel();
+
+    pago.idcuota   = "cuota2";                    //ID Cuota
+    pago.idnegocio = "woOlgcKsxaxLsJf52WXX";      // ID Negocio
+
+    loanBloc.realizarPago(pago);
   }
 
   Container accountItems(
