@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/loan_model.dart';
+import 'package:flutterapp/models/negociosabiertos_model.dart';
 //import '../models/loan.dart';
 //import 'moneyslider.dart';
 
@@ -8,7 +8,7 @@ class DetailPage extends StatelessWidget {
 //Detalle de sueño/historia
   @override
   Widget build(BuildContext context) {
-  final LoanModel loan = ModalRoute.of(context).settings.arguments;
+  final NegociosAbiertosModel loan = ModalRoute.of(context).settings.arguments;
 
     //DetailPage(this.loan);
 
@@ -24,7 +24,7 @@ class DetailPage extends StatelessWidget {
             margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
             child: CircleAvatar(
               radius: 80.0,
-              backgroundImage: NetworkImage(loan.worker),
+              backgroundImage: NetworkImage('https://randomuser.me/api/portraits/men/52.jpg'),
             ),
           ),
           Container(
@@ -53,7 +53,7 @@ class DetailPage extends StatelessWidget {
             child: RaisedButton(
               color: Colors.blueAccent,
               onPressed: () {
-                Navigator.pushNamed(context, 'sliderDream');
+                Navigator.pushNamed(context, 'sliderDream', arguments: loan);
               },
               child: Text('Expira pronto. Ayudalo!',
                   style: TextStyle(
