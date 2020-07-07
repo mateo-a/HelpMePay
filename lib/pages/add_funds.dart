@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/blocs/investor_bloc.dart';
 import 'package:flutterapp/blocs/provider.dart';
 import 'package:flutterapp/models/cargarcapital_model.dart';
 
