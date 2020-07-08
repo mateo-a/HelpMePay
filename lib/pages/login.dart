@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutterapp/blocs/provider.dart';
 import 'package:flutterapp/providers/usuario_provider.dart';
@@ -94,6 +95,8 @@ class Login extends StatelessWidget {
     // snapshot.hasData
     // true ? algo si true : algo si false
 
+
+
     return StreamBuilder(
       stream: bloc.formValidStream ,
       builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -117,11 +120,19 @@ class Login extends StatelessWidget {
   _login(BuildContext context, LoginBloc bloc) async {
     Map info = await usuarioProvider.login(bloc.email, bloc.password);
     if ( info['ok'] ) {
-        print('${bloc.email}');
-        print('************************');
-        print('${bloc.password}');
+      // print('${bloc.email}');   Imprimir el email que está en el bloque usuario
+      print('${bloc.email}');
+      print('${info['localId']}');
+      final id = ('${info['localId']}');
+      final res = await Firestore.instance.collection("workers").document(id).get().then((value){
+      return value.exists;
+      }); 
+      if (res != true ) {
+        Navigator.pushReplacementNamed(context, 'dream');
+      } else {
+        Navigator.pushReplacementNamed(context, 'borrower');
+      }
 
-        // Navigator.pushReplacementNamed(context, 'borrower');
     } else {
       mostrarAlerta( context, info['message']);
     }

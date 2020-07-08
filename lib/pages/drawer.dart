@@ -67,7 +67,7 @@ class MenuDrawer extends StatelessWidget {
               leading: Icon(Icons.home),
               title: Text('Home'),
               onTap: () {
-                Navigator.pushNamed(context, 'login');
+                Navigator.pushReplacementNamed(context, 'login');
               /*  Navigator.push(context, 
                 MaterialPageRoute(builder: (context) => TermsService())); */
               },

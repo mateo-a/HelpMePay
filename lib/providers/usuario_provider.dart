@@ -1,11 +1,11 @@
 import 'dart:convert';
-// import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 import 'package:http/http.dart' as http;
 
 class UsuarioProvider {
 
   final String _firebaseToken = 'AIzaSyCFAqx0BFm85qmpEI1zHYfXgb7lJaFzkEY';
-  //final _prefs = new PreferenciasUsuario();
+  final _prefs = new PreferenciasUsuario();
 
   Future<Map<String, dynamic>> login( String email, String password) async {
     final authData = {
@@ -21,9 +21,10 @@ class UsuarioProvider {
     if ( decodedResp.containsKey('idToken')){
       
         // _prefs.token    = decodedResp['idToken'];
-        // _prefs.localid  = decodedResp['localId'];
+        _prefs.localid  = decodedResp['localId'];
+        _prefs.email    = email;
 
-      return {'ok': true, 'token': decodedResp['idToken']};
+      return {'ok': true, 'localId': decodedResp['localId']};   // Enviar 'token': decodedResp['idToken'] para mantener Token Firebase
     } else {
       return {'ok': false, 'message': decodedResp['error']['message']};
     }
@@ -45,8 +46,9 @@ class UsuarioProvider {
     if ( decodedResp.containsKey('idToken')){
 
         // _prefs.token    = decodedResp['idToken'];
-        // _prefs.localid  = decodedResp['localId'];
-      return {'ok': true, 'localId': decodedResp['localId']};
+        _prefs.localid  = decodedResp['localId'];
+        _prefs.email    = email;
+      return {'ok': true, 'localId': decodedResp['localId']};    // Enviar 'token': decodedResp['idToken'] para mantener Token Firebase
     } else {
       return {'ok': false, 'message': decodedResp['error']['message']};
     }
