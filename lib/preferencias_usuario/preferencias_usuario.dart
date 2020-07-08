@@ -34,6 +34,15 @@ class PreferenciasUsuario {
     _prefs.setString('localid', value);
   }
 
+    // GET y SET del Token, nombre, etc
+  get email {
+    return _prefs.getString('email') ?? '';
+  }
+
+  set email( String value ) {
+    _prefs.setString('email', value);
+  }
+
   // GET y SET de la última página
   get ultimaPagina {
     return _prefs.getString('ultimaPagina') ?? 'login';

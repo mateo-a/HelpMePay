@@ -15,9 +15,12 @@ import 'package:flutterapp/pages/earnings.dart';
 import 'package:flutterapp/pages/progress_borrower.dart';
 import 'package:flutterapp/pages/form.dart';
 
+import 'package:flutterapp/pages/test.dart';
+
 Map<String, WidgetBuilder> getApplicationRoutes() {
 
   return <String, WidgetBuilder> {
+        'Pay'                 : ( BuildContext context ) => PayScreen(),
         'login'               : ( BuildContext context ) => Login(),
         'registro'            : ( BuildContext context ) => Registro(),
         'dream'               : ( BuildContext context ) => MyDreamHomePage(),

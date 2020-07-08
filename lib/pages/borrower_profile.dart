@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/models/worker_model.dart';
+import 'package:flutterapp/models/workernegocio_model.dart';
 import 'drawer_b.dart';
-// import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 //import 'models/user.dart';
 
 class BorrowerScreen extends StatelessWidget {
@@ -10,11 +13,13 @@ class BorrowerScreen extends StatelessWidget {
   //     : assert(user != null),
   //       super(key: key);
 
-  // final prefs = new PreferenciasUsuario(); // Preferencias de usuario
+  final prefs = new PreferenciasUsuario(); // Preferencias de usuario
 
   @override
   Widget build(BuildContext context) {
     // prefs.ultimaPagina = 'borrower'; // Guardar ultima pagina visitada
+    final workerBloc = Provider.workersBloc(context);
+    workerBloc.cargarWorker(prefs.localid);
 
     return Scaffold(
       drawer: MenuDrawerB(),
@@ -22,46 +27,55 @@ class BorrowerScreen extends StatelessWidget {
         backgroundColor: Colors.blue[700],
         title: Text("Member Profile"),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: ListView(
-          children: [
-            SizedBox(height: 25),
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                  color: Colors.blue[700], shape: BoxShape.circle),
-              child: Icon(
-                Icons.person,
-                size: 96,
-                color: Colors.white,
-              ),
-            ),
-            Container(
-              child: Material(
-                type: MaterialType.transparency,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Center(
-                    child: Text(
-                      "Lenora Martinez",
-                      //user.name,
-                      textScaleFactor: 2,
+      body: StreamBuilder(
+        stream: workerBloc.workersStream,
+        builder: (BuildContext context, AsyncSnapshot<List<WorkerModel>> snapshot) {
+          if (snapshot.hasData) {
+            final worker = snapshot.data;            
+            return Padding(
+              padding: EdgeInsets.all(8),
+              child: ListView(
+                children: [
+                  SizedBox(height: 25),
+                  Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                        color: Colors.blue[700], shape: BoxShape.circle),
+                    child: Icon(
+                      Icons.person,
+                      size: 96,
+                      color: Colors.white,
                     ),
                   ),
-                ),
+                  Container(
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Center(
+                          child: Text(worker[0].nombre,
+                            //user.name,
+                            textScaleFactor: 2,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: RaisedButton(
+                      color: Colors.green[500],
+                      child: Text('Make a Payment',
+                          style: TextStyle(color: Colors.white, fontSize: 20)),
+                      onPressed: () {},
+                    ),
+                  )
+                ],
               ),
-            ),
-            Center(
-              child: RaisedButton(
-                color: Colors.green[500],
-                child: Text('Make a Payment',
-                    style: TextStyle(color: Colors.white, fontSize: 20)),
-                onPressed: () {},
-              ),
-            )
-          ],
-        ),
+            );
+          } else {
+            return Center( child: CircularProgressIndicator());
+          }
+        }  
       ),
     );
   }

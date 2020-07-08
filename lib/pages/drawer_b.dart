@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/models/worker_model.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 //import 'pay_history.dart';
 //import 'terms_service.dart';
 //import 'borrower_profile.dart';
@@ -6,82 +9,95 @@ import 'package:flutter/material.dart';
 
 
 class MenuDrawerB extends StatelessWidget {
+  final prefs = new PreferenciasUsuario();
   //Sidebar Menu for all inside views of the applications in the lender profile
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            GestureDetector(
-                child: UserAccountsDrawerHeader(
-                accountName: Text('Victor Rodriguez'),
-                accountEmail: Text('Victor@gmail.com'),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.people),
+    final workerBloc = Provider.workersBloc(context);
+    workerBloc.cargarWorker(prefs.localid);
+    return StreamBuilder(
+        stream: workerBloc.workersStream,
+        builder: (BuildContext context, AsyncSnapshot<List<WorkerModel>> snapshot) {
+          if (snapshot.hasData) {
+            final worker = snapshot.data;
+          return Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                GestureDetector(
+                    child: UserAccountsDrawerHeader(
+                    accountName: Text(worker[0].nombre+' '+worker[0].apellido),
+                    accountEmail: Text(prefs.email),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.people),
+                    ),
+                  ),
+                  onTap: (){
+                    // Navigator.pushReplacementNamed(context, 'borrower');
+                    Navigator.pushNamed(context, 'borrower');
+                   /* Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => BorrowerScreen()),); */
+                  },
                 ),
-              ),
-              onTap: (){
-                // Navigator.pushReplacementNamed(context, 'borrower');
-                Navigator.pushNamed(context, 'borrower');
-               /* Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BorrowerScreen()),); */
-              },
+                ListTile(
+                  leading: Icon(Icons.people),
+                  title: Text('Solicita tu préstamo'),
+                  onTap: (){
+                    Navigator.pushNamed(context, 'emptyState');
+                      /*  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EmptyState())); */
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.attach_money),
+                  title: Text('Realizar un pago'),
+                  onTap: (){
+                    Navigator.pushNamed(context, 'payHistory');
+                    /* Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PayHistory()),
+                ); */
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.monetization_on),
+                  title: Text('Consultar Estado de Recaudo'),
+                  onTap: (){
+                    Navigator.pushNamed(context, 'progressBorrower');
+                    /* Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PayHistory()),
+                ); */
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.priority_high),
+                  title: Text('Terminos y condiciones'),
+                  onTap: (){
+                    Navigator.pushNamed(context, 'termService');
+                  /*   Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TermsService()),
+                ); */
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.home),
+                  title: Text('Home'),
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, 'login');
+                  /*  Navigator.push(context, 
+                    MaterialPageRoute(builder: (context) => TermsService())); */
+                  },
+                ),
+              ],
             ),
-            ListTile(
-              leading: Icon(Icons.people),
-              title: Text('Solicita tu préstamo'),
-              onTap: (){
-                Navigator.pushNamed(context, 'emptyState');
-                  /*  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EmptyState())); */
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text('Realizar un pago'),
-              onTap: (){
-                Navigator.pushNamed(context, 'payHistory');
-                /* Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PayHistory()),
-            ); */
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('Consultar Estado de Recaudo'),
-              onTap: (){
-                Navigator.pushNamed(context, 'progressBorrower');
-                /* Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PayHistory()),
-            ); */
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.priority_high),
-              title: Text('Terminos y condiciones'),
-              onTap: (){
-                Navigator.pushNamed(context, 'termService');
-              /*   Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TermsService()),
-            ); */
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
-              onTap: () {
-                Navigator.pushNamed(context, 'login');
-              /*  Navigator.push(context, 
-                MaterialPageRoute(builder: (context) => TermsService())); */
-              },
-            ),
-          ],
-        ),
-      );
+          );
+        } else {
+          return Center( child: CircularProgressIndicator());
+        }
+      }
+    );
   }
 }
