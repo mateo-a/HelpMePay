@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/pages/add_funds.dart';
 import 'package:flutterapp/pages/earnings_by_borrower.dart';
+import 'package:flutterapp/pages/invoice.dart';
 
 import 'package:flutterapp/pages/login.dart';
 import 'package:flutterapp/pages/signup.dart';
@@ -15,25 +16,22 @@ import 'package:flutterapp/pages/earnings.dart';
 import 'package:flutterapp/pages/progress_borrower.dart';
 import 'package:flutterapp/pages/form.dart';
 
-import 'package:flutterapp/pages/test.dart';
-
 Map<String, WidgetBuilder> getApplicationRoutes() {
-
-  return <String, WidgetBuilder> {
-        'Pay'                 : ( BuildContext context ) => PayScreen(),
-        'login'               : ( BuildContext context ) => Login(),
-        'registro'            : ( BuildContext context ) => Registro(),
-        'dream'               : ( BuildContext context ) => MyDreamHomePage(),
-        'funds'               : ( BuildContext context ) => FundsSlider(),
-        'sliderDream'         : ( BuildContext context ) => MoneySlider(),
-        'detailDream'         : ( BuildContext context ) => DetailPage(),
-        'borrower'            : ( BuildContext context ) => BorrowerScreen(),
-        'emptyState'          : ( BuildContext context ) => EmptyState(),
-        'payHistory'          : ( BuildContext context ) => PayHistory(),
-        'termService'         : ( BuildContext context ) => TermsService(),
-        'earning'             : ( BuildContext context ) => EarningScreen(),
-        'earningByBorrower'   : ( BuildContext context ) => EarningsByBorrower(),
-        'progressBorrower'    : ( BuildContext context ) => ProgressBorrower(),
-        'formScreen'          : ( BuildContext context ) => FormScreen(),
-      };
+  return <String, WidgetBuilder>{
+    'invoice': (BuildContext context) => Invoice(),
+    'login': (BuildContext context) => Login(),
+    'registro': (BuildContext context) => Registro(),
+    'dream': (BuildContext context) => MyDreamHomePage(),
+    'funds': (BuildContext context) => FundsSlider(),
+    'sliderDream': (BuildContext context) => MoneySlider(),
+    'detailDream': (BuildContext context) => DetailPage(),
+    'borrower': (BuildContext context) => BorrowerScreen(),
+    'emptyState': (BuildContext context) => EmptyState(),
+    'payHistory': (BuildContext context) => PayHistory(),
+    'termService': (BuildContext context) => TermsService(),
+    'earning': (BuildContext context) => EarningScreen(),
+    'earningByBorrower': (BuildContext context) => EarningsByBorrower(),
+    'progressBorrower': (BuildContext context) => ProgressBorrower(),
+    'formScreen': (BuildContext context) => FormScreen(),
+  };
 }
