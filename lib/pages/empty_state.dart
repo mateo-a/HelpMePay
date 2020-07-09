@@ -16,10 +16,7 @@ class EmptyState extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network(
-                  'https://icons.iconarchive.com/icons/inipagi/business-economic/256/rocket-icon.png',
-                  width: 150,
-                  height: 150),
+              Text('🚀', style: TextStyle(fontSize: 150)),
               SizedBox(height: 25),
               Center(
                 child: Text(
