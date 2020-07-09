@@ -34,6 +34,15 @@ class PreferenciasUsuario {
     _prefs.setString('localid', value);
   }
 
+  // GET y SET del Token, nombre, etc
+  get negid {
+    return _prefs.getString('negid') ?? '';
+  }
+
+  set negid( String value ) {
+    _prefs.setString('negid', value);
+  }
+
     // GET y SET del Token, nombre, etc
   get email {
     return _prefs.getString('email') ?? '';
