@@ -32,13 +32,6 @@ class MenuDrawerB extends StatelessWidget {
           _validaPrestamo(workerBloc),
           _estatusNegocio(workerBloc),
           ListTile(
-            leading: Icon(Icons.monetization_on),
-            title: Text('Consultar Estado de Recaudo'),
-            onTap: (){
-              Navigator.pushNamed(context, 'progressBorrower');
-            },
-          ),
-          ListTile(
             leading: Icon(Icons.priority_high),
             title: Text('Terminos y condiciones'),
             onTap: (){
@@ -103,7 +96,13 @@ class MenuDrawerB extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){
         if (snapshot.hasData) {
           if (snapshot.data[0].data.estado == "abierto") {
-            return SizedBox();
+            return ListTile(
+              leading: Icon(Icons.monetization_on),
+              title: Text('Consultar Estado de Recaudo'),
+              onTap: (){
+              Navigator.pushNamed(context, 'progressBorrower');
+              },
+            );
           } else {
             return ListTile(
               leading: Icon(Icons.attach_money),
