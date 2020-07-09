@@ -8,6 +8,7 @@ import 'package:flutterapp/models/negociosabiertos_model.dart';
 //import 'package:flutterapp/pages/dream.dart';
 //import 'package:flutterapp/pages/dream2.dart';
 import 'package:flutterapp/pages/drawer.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 
 class MoneySlider extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class MoneySlider extends StatefulWidget {
 }
 
 class _MoneySliderState extends State<MoneySlider> {
+  final prefs = new PreferenciasUsuario();
   InvestorBloc investorBloc;
   var sliderValue = 0.0;
 
@@ -26,7 +28,7 @@ class _MoneySliderState extends State<MoneySlider> {
       final AportarNegocio aporte = new AportarNegocio();
 
       aporte.idnegocio       = loan.idfire;
-      aporte.idinversionista = "20007";               //ID del inversionista
+      aporte.idinversionista = prefs.localid;            //Actualizado con ID real del inversionista
       aporte.aporte          = sliderValue.toInt();
 
       investorBloc.realizarAporte(aporte);
