@@ -5,12 +5,14 @@ import 'package:flutterapp/models/investor_model.dart';
 import 'package:flutterapp/blocs/provider.dart';
 
 import 'package:flutterapp/providers/usuario_provider.dart';
+import 'package:flutterapp/providers/workers_provider.dart';
 import 'package:flutterapp/utils/utils.dart';
 
 
 
 class Registro extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
+  final workerProvider = new WorkersProvider();
 
   final WorkerModel worker = new WorkerModel();
   final InvestorModel investor = new InvestorModel();
@@ -122,8 +124,8 @@ class Registro extends StatelessWidget {
       investor.apellido = '${bloc.apellido}';
       investor.cedula   = '${bloc.cedula}';
       // worker.imagen  = '${bloc.imagen}';
-      Navigator.pushReplacementNamed(context, 'dream');
       investorBloc.agregarInvestor(investor);
+      Navigator.pushReplacementNamed(context, 'dream');
     } else {
       mostrarAlerta( context, info['message']);
     }
@@ -137,8 +139,13 @@ class Registro extends StatelessWidget {
       worker.apellido = '${bloc.apellido}';
       worker.cedula   = '${bloc.cedula}';
       // worker.imagen  = '${bloc.imagen}';
-      Navigator.pushReplacementNamed(context, 'borrower');
-      workersBloc.agregarWorker(worker);
+      final res = await  workerProvider.crearWorker(worker);
+      if (res == true) {
+        // workersBloc.agregarWorker(worker);
+        Navigator.pushReplacementNamed(context, 'borrower');
+        } else {
+          return Center( child: CircularProgressIndicator());
+        }
     } else {
       mostrarAlerta( context, info['message']);
     }
