@@ -30,13 +30,7 @@ class MenuDrawerB extends StatelessWidget {
             },
           ),
           _validaPrestamo(workerBloc),
-          ListTile(
-            leading: Icon(Icons.attach_money),
-            title: Text('Realizar un pago'),
-            onTap: (){
-              Navigator.pushNamed(context, 'payHistory');
-            },
-          ),
+          _estatusNegocio(workerBloc),
           ListTile(
             leading: Icon(Icons.monetization_on),
             title: Text('Consultar Estado de Recaudo'),
@@ -84,13 +78,14 @@ class MenuDrawerB extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){   
       if (snapshot.hasData) {
         if (snapshot.data.length != 0) {
+        prefs.negid = snapshot.data[0].id;
         return SizedBox();
       } else {
-        return ListTile(
-          leading: Icon(Icons.people),
-          title: Text('Solicita tu préstamo'),
-          onTap: (){
-            Navigator.pushNamed(context, 'emptyState');
+          return ListTile(
+            leading: Icon(Icons.people),
+            title: Text('Solicita tu préstamo'),
+            onTap: (){
+              Navigator.pushNamed(context, 'emptyState');
           },
         );
       } 
@@ -100,4 +95,29 @@ class MenuDrawerB extends StatelessWidget {
       },
     );
   }
+
+  Widget _estatusNegocio(WorkersBloc workerBloc) {
+    workerBloc.cargarNegociosWorker(prefs.localid);
+    return StreamBuilder(
+      stream: workerBloc.workernegocioStream,
+      builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){
+        if (snapshot.hasData) {
+          if (snapshot.data[0].data.estado == "abierto") {
+            return SizedBox();
+          } else {
+            return ListTile(
+              leading: Icon(Icons.attach_money),
+              title: Text('Realizar un pago'),
+              onTap: (){
+              Navigator.pushNamed(context, 'payHistory');
+              },
+            );
+          }
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
 }
