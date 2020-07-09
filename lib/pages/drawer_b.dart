@@ -70,7 +70,7 @@ class MenuDrawerB extends StatelessWidget {
       stream: workersBloc.workernegocioStream,
       builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){   
       if (snapshot.hasData) {
-        if (snapshot.data.length != 0) {
+        if (snapshot.data.length > 0) {
         prefs.negid = snapshot.data[0].id;
         return SizedBox();
       } else {
@@ -95,22 +95,27 @@ class MenuDrawerB extends StatelessWidget {
       stream: workerBloc.workernegocioStream,
       builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){
         if (snapshot.hasData) {
-          if (snapshot.data[0].data.estado == "abierto") {
-            return ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('Consultar Estado de Recaudo'),
-              onTap: (){
-              Navigator.pushNamed(context, 'progressBorrower');
-              },
-            );
+          if (snapshot.data.length > 0) {
+            if (snapshot.data[0].data.estado == "abierto") {
+              print(snapshot.data[0].data.saldo);
+              return ListTile(
+                leading: Icon(Icons.monetization_on),
+                title: Text('Consultar Estado de Recaudo'),
+                onTap: (){
+                Navigator.pushNamed(context, 'progressBorrower');
+                },
+              );
+            } else {
+              return ListTile(
+                leading: Icon(Icons.attach_money),
+                title: Text('Realizar un pago'),
+                onTap: (){
+                Navigator.pushNamed(context, 'payHistory');
+                },
+              );
+            }
           } else {
-            return ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text('Realizar un pago'),
-              onTap: (){
-              Navigator.pushNamed(context, 'payHistory');
-              },
-            );
+            return SizedBox();
           }
         } else {
           return Center(child: CircularProgressIndicator());
