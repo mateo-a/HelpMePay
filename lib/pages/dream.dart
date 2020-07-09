@@ -47,10 +47,14 @@ class _MyHomePageState extends State<MyDreamHomePage> {
           return Container(child: Center(child: CircularProgressIndicator()));
         } else {
           final negociosAbiertos = snapshot.data;
-          return ListView.builder(
-            itemCount: negociosAbiertos.length,
-            itemBuilder: (BuildContext context, int index) => _crearItem(context, loanBloc, negociosAbiertos[index]),
-          );
+          if (negociosAbiertos.length > 0) {
+            return ListView.builder(
+              itemCount: negociosAbiertos.length,
+              itemBuilder: (BuildContext context, int index) => _crearItem(context, loanBloc, negociosAbiertos[index]),
+            );
+          } else {
+            return Center(child: Text('No hay solicitudes abiertas'));
+          }
         }
       },
     );
@@ -65,9 +69,6 @@ class _MyHomePageState extends State<MyDreamHomePage> {
       onTap: () {
         Navigator.pushNamed(context, 'detailDream',
             arguments: negociosAbiertos);
-
-        Navigator.pushNamed(context, 'detailDream',
-                          arguments: negociosAbiertos);
       },
     );
   }
