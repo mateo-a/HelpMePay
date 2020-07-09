@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyDreamHomePage> {
     return StreamBuilder(
       stream: loanBloc.negociosAbiertosStream,
       builder: (BuildContext context, AsyncSnapshot<List<NegociosAbiertosModel>>snapshot){
-        print(snapshot.data);
+        //print(snapshot.data);
         if (snapshot.data == null) {
           return Container(child: Center(child: CircularProgressIndicator()));
         } else {
