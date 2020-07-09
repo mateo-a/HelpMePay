@@ -5,14 +5,17 @@ import 'package:flutterapp/models/cuotasnegocio_model.dart';
 //import 'package:flutterapp/models/loan_model.dart';
 import 'package:flutterapp/models/pago_model.dart';
 import 'package:flutterapp/pages/drawer_b.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 
 class PayHistory extends StatefulWidget {
+  
   @override
   _PayHistoryState createState() => _PayHistoryState();
 }
 
 class _PayHistoryState extends State<PayHistory> {
   LoanBloc loanBloc;
+  final prefs = new PreferenciasUsuario();
 
   Card topArea() => Card(
         margin: EdgeInsets.all(10.0),
@@ -78,9 +81,9 @@ class _PayHistoryState extends State<PayHistory> {
                       borderRadius: BorderRadius.circular(20.0)),
                   color: Colors.green[500],
                   onPressed: () {
-                    _realizarPago(context, loanBloc);
+                    //_realizarPago(context, loanBloc, cuota);
                   },
-                  child: Text("Realizar un Pago",
+                  child: Text("Selecciona la cuota a pagar",
                       style: TextStyle(color: Colors.white)),
                 ),
               ],
@@ -91,22 +94,56 @@ class _PayHistoryState extends State<PayHistory> {
     );
   }
 
-  _realizarPago(BuildContext context, LoanBloc loanBloc) {
+  _showcontent(String cuota) {
+    showDialog(
+      context: context, barrierDismissible: false, // user must tap button!
+
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text('Detalle de transacción'),
+          content: new SingleChildScrollView(
+            child: new ListBody(
+              children: [
+                new Text(
+                    'Acabas de realizar el pago de la $cuota'),
+              ],
+            ),
+          ),
+          actions: [
+            new FlatButton(
+              child: new Text('Continuar'),
+              onPressed: () {
+                Navigator.pop(context);
+                /*Navigator.push(
+                  context,
+                    MaterialPageRoute(
+                    builder: (context) => MyDreamHomePage(),
+                  ),
+                ); */
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _realizarPago(BuildContext context, LoanBloc loanBloc, String cuota) {
     final PagoModel pago = new PagoModel();
 
-    pago.idcuota = "cuota2"; //ID Cuota
-    pago.idnegocio = "woOlgcKsxaxLsJf52WXX"; // ID Negocio
-
+    pago.idcuota =  cuota;//ID Cuota
+    pago.idnegocio = prefs.negid; // ID Negocio
     loanBloc.realizarPago(pago);
+    _showcontent(cuota);
   }
 
   Widget _displayAccoutList(LoanBloc loanBloc) {
-    loanBloc.cuotasNegocio("ENWTpce6OxCFQRgy1rMu");
+    loanBloc.cuotasNegocio(prefs.negid);
     return StreamBuilder(
         stream: loanBloc.cuotasNegocioStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            print(snapshot);
+            //print(snapshot);
             final cuotas = snapshot.data;
             return ListView.builder(
               itemCount: cuotas.length,
@@ -122,17 +159,37 @@ class _PayHistoryState extends State<PayHistory> {
   }
 
   Widget _crearItem(
-      BuildContext context, LoanBloc loanBloc, CuotasNegocioModel cuotas) {
-    var raisedButton = RaisedButton(
-        color: Colors.green[500],
-        onPressed: _realizarPago(context, loanBloc),
-        child: Text("Pagar", style: TextStyle(color: Colors.white)));
-    return ListTile(
-      title: Text('id de cuota: ${cuotas.id}'),
-      contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-      subtitle: Text(
-          'total a pagar: ${cuotas.data.aporte.toString()}\nfecha de pago: ${cuotas.data.fechapago}'),
-      trailing: raisedButton,
-    );
+    BuildContext context, LoanBloc loanBloc, CuotasNegocioModel cuotas) {
+      if (cuotas.data.estado == "pendiente") {
+        return Card(
+                  child: ListTile( enabled: true,
+            title: Text('Id de cuota: ${cuotas.id}'),
+            isThreeLine: true,
+            contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            subtitle: Text(
+                'Total a pagar: ${cuotas.data.valor.toString()}\nAbono a Capital: ${cuotas.data.aporte}\nAbono Intereses: ${cuotas.data.interes}\n\nFecha limite de pago: ${cuotas.data.fechapago}'),
+            trailing: Text('${cuotas.data.estado}'),
+            onTap: () {
+              _realizarPago(context, loanBloc, '${cuotas.id}');
+              setState(() {});
+            }),
+        );
+      } else {
+        return Card(
+                  child: ListTile( enabled: false,
+            title: Text('Id de cuota: ${cuotas.id}'),
+            contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            subtitle: Text(
+                'Total a pagar: ${cuotas.data.valor.toString()}\nAbono a Capital: ${cuotas.data.aporte}\nAbono Intereses: ${cuotas.data.interes}\n\nFecha limite de pago: ${cuotas.data.fechapago}'),
+            trailing: Text('${cuotas.data.estado}'),
+            onTap: () {
+            }),
+        );
+      }
+        // trailing: FlatButton(
+        //   color: Colors.green[500],
+        //   onPressed: _realizarPago(context, loanBloc, '${cuotas.id}'),
+        //   child: Text("Pagar", style: TextStyle(color: Colors.white))) //raisedButton,
+      // );
   }
 }
