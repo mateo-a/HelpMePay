@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import 'package:flutterapp/models/worker_model.dart';
 import 'package:flutterapp/models/investor_model.dart';
 import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/providers/investors_provider.dart';
 
 import 'package:flutterapp/providers/usuario_provider.dart';
 import 'package:flutterapp/providers/workers_provider.dart';
@@ -13,6 +14,7 @@ import 'package:flutterapp/utils/utils.dart';
 class Registro extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
   final workerProvider = new WorkersProvider();
+  final investorProvider = new InvestorsProvider();
 
   final WorkerModel worker = new WorkerModel();
   final InvestorModel investor = new InvestorModel();
@@ -124,8 +126,13 @@ class Registro extends StatelessWidget {
       investor.apellido = '${bloc.apellido}';
       investor.cedula   = '${bloc.cedula}';
       // worker.imagen  = '${bloc.imagen}';
-      investorBloc.agregarInvestor(investor);
-      Navigator.pushReplacementNamed(context, 'dream');
+      final res = await investorProvider.crearInvestor(investor);
+      if (res == true) {
+        //investorBloc.agregarInvestor(investor);
+        Navigator.pushReplacementNamed(context, 'dream');
+        } else {
+          return Center( child: CircularProgressIndicator());
+        }
     } else {
       mostrarAlerta( context, info['message']);
     }
