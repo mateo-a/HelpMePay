@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/blocs/provider.dart';
 import 'package:flutterapp/models/worker_model.dart';
+import 'package:flutterapp/models/workernegocio_model.dart';
 import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
-//import 'pay_history.dart';
-//import 'terms_service.dart';
-//import 'borrower_profile.dart';
-//import 'empty_state.dart';
-
 
 class MenuDrawerB extends StatelessWidget {
   final prefs = new PreferenciasUsuario();
@@ -14,90 +10,94 @@ class MenuDrawerB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final workerBloc = Provider.workersBloc(context);
-    workerBloc.cargarWorker(prefs.localid);
-    return StreamBuilder(
-        stream: workerBloc.workersStream,
-        builder: (BuildContext context, AsyncSnapshot<List<WorkerModel>> snapshot) {
-          if (snapshot.hasData) {
-            final worker = snapshot.data;
-          return Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                GestureDetector(
-                    child: UserAccountsDrawerHeader(
-                    accountName: Text(worker[0].nombre+' '+worker[0].apellido),
-                    accountEmail: Text(prefs.email),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.people),
-                    ),
-                  ),
-                  onTap: (){
-                    // Navigator.pushReplacementNamed(context, 'borrower');
-                    Navigator.pushNamed(context, 'borrower');
-                   /* Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BorrowerScreen()),); */
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.people),
-                  title: Text('Solicita tu préstamo'),
-                  onTap: (){
-                    Navigator.pushNamed(context, 'emptyState');
-                      /*  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EmptyState())); */
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.attach_money),
-                  title: Text('Realizar un pago'),
-                  onTap: (){
-                    Navigator.pushNamed(context, 'payHistory');
-                    /* Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PayHistory()),
-                ); */
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.monetization_on),
-                  title: Text('Consultar Estado de Recaudo'),
-                  onTap: (){
-                    Navigator.pushNamed(context, 'progressBorrower');
-                    /* Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PayHistory()),
-                ); */
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.priority_high),
-                  title: Text('Terminos y condiciones'),
-                  onTap: (){
-                    Navigator.pushNamed(context, 'termService');
-                  /*   Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TermsService()),
-                ); */
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Home'),
-                  onTap: () {
-                    Navigator.pushReplacementNamed(context, 'login');
-                  /*  Navigator.push(context, 
-                    MaterialPageRoute(builder: (context) => TermsService())); */
-                  },
-                ),
-              ],
+
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          GestureDetector(
+            child: UserAccountsDrawerHeader(
+              accountName: _creaNombre(workerBloc),
+              accountEmail: Text(prefs.email),
+              currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(Icons.people),
+              ),
             ),
-          );
-        } else {
-          return Center( child: CircularProgressIndicator());
+            onTap: (){
+              // Navigator.pushReplacementNamed(context, 'borrower');
+              Navigator.pushNamed(context, 'borrower');
+            },
+          ),
+          _validaPrestamo(workerBloc),
+          ListTile(
+            leading: Icon(Icons.attach_money),
+            title: Text('Realizar un pago'),
+            onTap: (){
+              Navigator.pushNamed(context, 'payHistory');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.monetization_on),
+            title: Text('Consultar Estado de Recaudo'),
+            onTap: (){
+              Navigator.pushNamed(context, 'progressBorrower');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.priority_high),
+            title: Text('Terminos y condiciones'),
+            onTap: (){
+              Navigator.pushNamed(context, 'termService');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, 'login');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _creaNombre(WorkersBloc workerBloc) {
+    return StreamBuilder(
+      stream: workerBloc.workersStream,
+      builder: (BuildContext context, AsyncSnapshot<List<WorkerModel>> snapshot){
+        if (snapshot.hasData) {
+          final worker = snapshot.data;
+          return Text(worker[0].nombre+' '+worker[0].apellido);
+          } else {
+            return Center( child: CircularProgressIndicator());
         }
+      },
+    );
+  }
+
+  Widget _validaPrestamo(WorkersBloc workersBloc) {
+    workersBloc.cargarNegociosWorker(prefs.localid);
+    return StreamBuilder(
+      stream: workersBloc.workernegocioStream,
+      builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){   
+      if (snapshot.hasData) {
+        if (snapshot.data.length != 0) {
+        return SizedBox();
+      } else {
+        return ListTile(
+          leading: Icon(Icons.people),
+          title: Text('Solicita tu préstamo'),
+          onTap: (){
+            Navigator.pushNamed(context, 'emptyState');
+          },
+        );
+      } 
+      } else {
+        return Center( child: CircularProgressIndicator());
       }
+      },
     );
   }
 }
