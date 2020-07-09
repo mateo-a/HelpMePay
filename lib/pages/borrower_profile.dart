@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/blocs/provider.dart';
 import 'package:flutterapp/models/worker_model.dart';
-import 'package:flutterapp/models/workernegocio_model.dart';
+//import 'package:flutterapp/models/workernegocio_model.dart';
 import 'drawer_b.dart';
 import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 //import 'models/user.dart';
