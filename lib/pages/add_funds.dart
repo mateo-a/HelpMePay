@@ -4,6 +4,7 @@ import 'package:flutterapp/blocs/provider.dart';
 import 'package:flutterapp/models/cargarcapital_model.dart';
 
 import 'package:flutterapp/pages/drawer.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 
 class FundsSlider extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class FundsSlider extends StatefulWidget {
 }
 
 class _FundsSliderState extends State<FundsSlider> {
+  final prefs = new PreferenciasUsuario();
   InvestorBloc investorBloc;
   var sliderValue = 0.0;
 
@@ -20,7 +22,7 @@ class _FundsSliderState extends State<FundsSlider> {
     _cargarCapital(BuildContext context, InvestorBloc investorBloc){
       final AgregarCapital agregar = new AgregarCapital();
 
-      agregar.id      = "20007";              // ID del inversionista
+      agregar.id      = prefs.localid;              // Actualizado con ID real del inversionista
       agregar.capital =  sliderValue.toInt();
 
       investorBloc.agregarCapital(agregar);
