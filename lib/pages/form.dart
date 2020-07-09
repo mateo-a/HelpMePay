@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/loan_model.dart';
 import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 import 'package:intl/intl.dart';
 
 //This class contains the construction parameters of the form screen
@@ -12,6 +13,7 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
+  final prefs = new PreferenciasUsuario();
   LoanBloc loanBloc;
   int _amount;
   String _titulo;
@@ -150,7 +152,7 @@ class FormScreenState extends State<FormScreen> {
               child: Text('Aceptar'),
               onPressed: () {
                 _showConfirmation();
-                _crearNegocio(_amount, _titulo, "10002", expiration, _story,
+                _crearNegocio(_amount, _titulo, prefs.localid, expiration, _story,
                     _installments);
               },
             ),
