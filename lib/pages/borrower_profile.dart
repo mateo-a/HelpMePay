@@ -17,10 +17,11 @@ class BorrowerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(prefs.localid);
     // prefs.ultimaPagina = 'borrower'; // Guardar ultima pagina visitada
     final workerBloc = Provider.workersBloc(context);
     workerBloc.cargarWorker(prefs.localid);
-
+    
     return Scaffold(
       drawer: MenuDrawerB(),
       appBar: AppBar(
