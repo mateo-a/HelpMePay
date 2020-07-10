@@ -82,29 +82,42 @@ class BorrowerScreen extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){   
       if (snapshot.hasData) {
         if (snapshot.data.length > 0) {
-        prefs.negid = snapshot.data[0].id;
-          return Center(
-            child: RaisedButton(
-            color: Colors.green[500],
-            child: Text('Realiza un Pago',
+          if (snapshot.data[0].data.estado == "abierto") {
+            return Center(
+              child: RaisedButton(
+              color: Colors.green[500],
+              child: Text('Consultar Estado de Recaudo',
+              style: TextStyle(color: Colors.white, fontSize: 20)),
+              onPressed: () {
+                Navigator.pushNamed(context, 'payHistory');
+              },
+              ),
+            );
+          } else {
+            prefs.negid = snapshot.data[0].id;
+            return Center(
+              child: RaisedButton(
+                color: Colors.green[500],
+                child: Text('Realiza un Pago',
                 style: TextStyle(color: Colors.white, fontSize: 20)),
-            onPressed: () {
-              Navigator.pushNamed(context, 'payHistory');
-            },
-          ),
-        );
-      } else {
+                onPressed: () {
+                  Navigator.pushNamed(context, 'payHistory');
+                  },
+                ),
+              );
+            }
+        } else {
           return Center(
             child: RaisedButton(
             color: Colors.green[500],
             child: Text('Solicita tu préstamo',
-                style: TextStyle(color: Colors.white, fontSize: 20)),
+            style: TextStyle(color: Colors.white, fontSize: 20)),
             onPressed: () {
               Navigator.pushNamed(context, 'emptyState');
-            },
-          ),
-        );
-      } 
+              },
+            ),
+          );
+        } 
       } else {
         return Center( child: CircularProgressIndicator());
       }

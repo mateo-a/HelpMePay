@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/blocs/loan_bloc.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/models/inversorsloan_model.dart';
+import 'package:flutterapp/models/negociosabiertos_model.dart';
+import 'package:flutterapp/models/negociosinvestor_model.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import 'package:flutterapp/pages/drawer_b.dart';
@@ -10,8 +16,17 @@ class ProgressBorrower extends StatefulWidget {
 }
 
 class _ProgressBorrowerState extends State<ProgressBorrower> {
+  final prefs = new PreferenciasUsuario();
+  LoanBloc loanBloc;
+  String fecha;
+  int meta;
+  int aportes;
+
   @override
   Widget build(BuildContext context) {
+    loanBloc = Provider.loanBloc(context);
+    double perc = (aportes / meta);
+
     return Scaffold(
         drawer: MenuDrawerB(),
         appBar: AppBar(
@@ -25,48 +40,34 @@ class _ProgressBorrowerState extends State<ProgressBorrower> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "\n🤝\n25\nPatrocinadores",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 23.0),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "\n📅\n45\nDías restantes",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 23.0),
-                      ),
-                    ),
-                  ),
+                  _patrocinadores(loanBloc),
+                  _expira(loanBloc),
                 ],
               ),
               SizedBox(height: 15),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: LinearPercentIndicator(
-                  lineHeight: 24.0,
-                  width: 320.0,
-                  animation: true,
-                  trailing: new Text(" 🤑", style: TextStyle(fontSize: 32)),
-                  percent: 0.7,
-                  animateFromLastPercent: true,
-                  center: Text(
-                    "\u0024476000",
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: LinearPercentIndicator(
+                      lineHeight: 24.0,
+                      width: 320.0,
+                      animation: true,
+                      trailing: new Text(" 🤑", style: TextStyle(fontSize: 32)),
+                      percent: perc,
+                      animateFromLastPercent: true,
+                      center: Text(
+                        "\u0024$aportes",
+                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
+                      progressColor: Colors.green[500],
+                      backgroundColor: Colors.greenAccent[100],
+                    ),
                   ),
-                  progressColor: Colors.green[500],
-                  backgroundColor: Colors.greenAccent[100],
-                ),
-              ),
-              Center(
-                child: Text("Meta: \u0024500000"),
+                  Center(
+                    child: Text("Meta: \u0024$meta"),
+                  ),
+                ],
               ),
               SizedBox(height: 15),
               Container(
@@ -111,5 +112,63 @@ class _ProgressBorrowerState extends State<ProgressBorrower> {
             ],
           ),
         ));
+  }
+
+  _patrocinadores(LoanBloc loanBloc) {
+    loanBloc.inversorByLoan(prefs.negid);
+    int len;
+    return StreamBuilder(
+        stream: loanBloc.inversorsByLoanStream,
+        builder: (BuildContext context,
+            AsyncSnapshot<List<InversorsLoanModel>> snapshot) {
+          if (snapshot.hasData) {
+            len = snapshot.data.length;
+          } else {
+            len = 0;
+          }
+          return Card(
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                "\n🤝\n$len\nPatrocinadores",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 23.0),
+              ),
+            ),
+          );
+        });
+  }
+
+  _expira(LoanBloc loanBloc) {
+    loanBloc.negociosAbiertos();
+    return StreamBuilder(
+      stream: loanBloc.negociosAbiertosStream,
+      builder: (BuildContext context,
+          AsyncSnapshot<List<NegociosAbiertosModel>> snapshot) {
+        if (snapshot.hasData) {
+          final negocio = snapshot.data;
+          for (var i = 0; i <= negocio.length; i++) {
+            if (negocio[i].idfire == prefs.negid) {
+              fecha = negocio[i].fechalimite;
+              meta = negocio[i].monto;
+              aportes = negocio[i].aportes;
+              break;
+            }
+          }
+        } else {
+          return SizedBox();
+        }
+        return Card(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              "\n📅\nExpira en\n$fecha",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 23.0),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
