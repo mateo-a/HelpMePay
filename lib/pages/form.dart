@@ -19,7 +19,7 @@ class FormScreenState extends State<FormScreen> {
   String _titulo;
   String _installments;
   String _story;
-  bool accepted = false;
+  bool isAccepted = false;
   String expiration = DateFormat('dd-MM-yyyy')
       .format(DateTime.now().add(Duration(days: 30)))
       .toString();
@@ -213,6 +213,11 @@ class FormScreenState extends State<FormScreen> {
     );
   }
 
+  _enableButton(){
+    setState(() {
+      isAccepted = true;
+    });
+  }
   // the constructor that shows it all together.
   @override
   Widget build(BuildContext context) {
@@ -238,11 +243,9 @@ class FormScreenState extends State<FormScreen> {
                     SizedBox(height: 20),
                     Row(children: [
                       Checkbox(
-                        value: accepted,
+                        value: isAccepted,
                         onChanged: (bool value) {
-                          setState(() {
-                            accepted = value;
-                          });
+                          _enableButton();
                         },
                       ),
                       Container(
@@ -259,13 +262,13 @@ class FormScreenState extends State<FormScreen> {
                         'Enviar',
                         style: TextStyle(color: Colors.white, fontSize: 24),
                       ),
-                      onPressed: () {
+                      onPressed: isAccepted ? () {
                         final form = _formKey.currentState;
                         if (form.validate()) {
                           _showMyDialog();
                           form.save();
                         }
-                      },
+                      } : null,
                     ),
                   ],
                 ),
