@@ -10,10 +10,10 @@ String workerModelToJson(WorkerModel data) => json.encode(data.toJson());
 
 class WorkerModel {
     WorkerModel({
-        this.id,
-        this.nombre,
-        this.apellido,
-        this.cedula, 
+        this.id = '10007',
+        this.nombre = 'Pablo',
+        this.apellido = 'Roa',
+        this.cedula = '98712356', 
         this.imagen = 'https:',
     });
 

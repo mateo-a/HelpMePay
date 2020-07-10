@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/blocs/provider.dart';
 import 'package:flutterapp/models/worker_model.dart';
+import 'package:flutterapp/models/workernegocio_model.dart';
 //import 'package:flutterapp/models/workernegocio_model.dart';
 import 'drawer_b.dart';
 import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
@@ -62,14 +63,7 @@ class BorrowerScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Center(
-                    child: RaisedButton(
-                      color: Colors.green[500],
-                      child: Text('Make a Payment',
-                          style: TextStyle(color: Colors.white, fontSize: 20)),
-                      onPressed: () {},
-                    ),
-                  )
+                  _validaPrestamo(workerBloc),
                 ],
               ),
             );
@@ -78,6 +72,43 @@ class BorrowerScreen extends StatelessWidget {
           }
         }  
       ),
+    );
+  }
+  
+  Widget _validaPrestamo(WorkersBloc workersBloc) {
+    workersBloc.cargarNegociosWorker(prefs.localid);
+    return StreamBuilder(
+      stream: workersBloc.workernegocioStream,
+      builder: (BuildContext context, AsyncSnapshot<List<WorkerNegocios>> snapshot){   
+      if (snapshot.hasData) {
+        if (snapshot.data.length > 0) {
+        prefs.negid = snapshot.data[0].id;
+          return Center(
+            child: RaisedButton(
+            color: Colors.green[500],
+            child: Text('Realiza un Pago',
+                style: TextStyle(color: Colors.white, fontSize: 20)),
+            onPressed: () {
+              Navigator.pushNamed(context, 'payHistory');
+            },
+          ),
+        );
+      } else {
+          return Center(
+            child: RaisedButton(
+            color: Colors.green[500],
+            child: Text('Solicita tu préstamo',
+                style: TextStyle(color: Colors.white, fontSize: 20)),
+            onPressed: () {
+              Navigator.pushNamed(context, 'emptyState');
+            },
+          ),
+        );
+      } 
+      } else {
+        return Center( child: CircularProgressIndicator());
+      }
+      },
     );
   }
 }

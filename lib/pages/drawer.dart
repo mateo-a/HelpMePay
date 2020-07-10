@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/blocs/provider.dart';
+import 'package:flutterapp/models/investor_model.dart';
+import 'package:flutterapp/preferencias_usuario/preferencias_usuario.dart';
 //import 'earnings.dart';
 
 // Sidebar menu for all the views of the lender menu
 class MenuDrawer extends StatelessWidget {
+  final prefs = new PreferenciasUsuario();
 
   @override
   Widget build(BuildContext context) {
+    final investorBloc = Provider.investorBloc(context);
+
     return Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('Lenora Rodriguez'),
-              accountEmail: Text('Lenora@gmail.com'),
+              accountName: _creaNombre(investorBloc),
+              accountEmail: Text(prefs.email),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Icon(Icons.people), 
@@ -20,7 +26,7 @@ class MenuDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.add_box),
-              title: Text('Agrega Fondos a tu Cuenta'),
+              title: Text('Agrega Fondos\na tu Cuenta'),
               onTap: () {
                 Navigator.pushNamed(context, 'funds');
                /* Navigator.push(context, 
@@ -74,6 +80,20 @@ class MenuDrawer extends StatelessWidget {
             ),
           ],
         ),
+    );
+  }
+
+  Widget _creaNombre(InvestorBloc investorBloc) {
+    return StreamBuilder(
+      stream: investorBloc.investorStream,
+      builder: (BuildContext context, AsyncSnapshot<List<InvestorModel>> snapshot){
+        if (snapshot.hasData) {
+          final investor = snapshot.data;
+          return Text(investor[0].nombre+' '+investor[0].apellido);
+          } else {
+            return Center( child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
