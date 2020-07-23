@@ -32,7 +32,6 @@ No download link available.
 ## Screenshots
 ![](https://i.imgur.com/rRVaqCJ.png?1)
 ![](https://i.imgur.com/cXYWgor.png?1)
-![](https://i.imgur.com/eBZWNk7.png)
 ![](https://i.imgur.com/iAUuQRl.jpg)
 ![](https://i.imgur.com/0si0Xy3.jpg)
 ![](https://i.imgur.com/NbyqIuW.jpg)
