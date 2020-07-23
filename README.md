@@ -30,7 +30,7 @@ $ flutter run
 No download link available. 
 
 ## Screenshots
-![](https://i.imgur.com/3QVFmgB.png)
+![](https://i.imgur.com/3QVFmgB.png?3)
 ![](https://i.imgur.com/iAUuQRl.jpg)
 ![](https://i.imgur.com/0si0Xy3.jpg)
 ![](https://i.imgur.com/NbyqIuW.jpg)
